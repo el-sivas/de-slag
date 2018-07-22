@@ -14,5 +14,7 @@
   	<module>dawn-central-data</module>
   	<module>dawn-central-logic</module>
   	<module>dawn-base-tools</module>
+  	<module>dawn-central-view</module>
+  	<module>dawn-central-model</module>
   </modules>
 </project>
