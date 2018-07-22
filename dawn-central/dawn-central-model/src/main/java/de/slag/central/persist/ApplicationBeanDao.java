@@ -4,12 +4,12 @@ import java.util.Optional;
 
 import de.slag.central.model.ApplicationBean;
 
-public interface ApplicationBeanDao<T extends ApplicationBean> {
+public interface ApplicationBeanDao<AB extends ApplicationBean> {
 
-	Optional<T> loadById(long id);
+	Optional<AB> loadById(long id);
 
-	void delete(T bean);
+	void delete(AB bean);
 	
-	void save(T bean);
+	void save(AB bean);
 
 }
