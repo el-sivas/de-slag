@@ -9,6 +9,7 @@
   <artifactId>dawn-central</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+
   <modules>
   	<module>dawn-central-data</module>
   </modules>
