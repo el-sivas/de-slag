@@ -16,5 +16,6 @@
   	<module>dawn-base-tools</module>
   	<module>dawn-central-view</module>
   	<module>dawn-central-model</module>
+  	<module>dawn-central-webapp-test</module>
   </modules>
 </project>
