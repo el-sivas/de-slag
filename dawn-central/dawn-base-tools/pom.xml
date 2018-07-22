@@ -5,5 +5,5 @@
     <artifactId>dawn-central</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>dawn-central-tools</artifactId>
+  <artifactId>dawn-base-tools</artifactId>
 </project>
