@@ -1,13 +1,14 @@
 # de-slag-dawn
 
-Overview
-  -data   | -> model   persistance layer
+    Overview
+
+    -data   | -> model   persistance layer
   
-  -model               persistance abstraction layer
+    -model               persistance abstraction layer
   
-  -logic  | -> model   all special logic (create, evalutate, validate, calc, ...), interfaces
+    -logic  | -> model   all special logic (create, evalutate, validate, calc, ...), interfaces
   
-  -view   | -> logic   gui
+    -view   | -> logic   gui
 
 
 dawn-root             external dependency management
