@@ -1,4 +1,4 @@
-package de.slag.central.persist;
+package de.slag.central.service;
 
 import java.util.Optional;
 
