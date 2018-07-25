@@ -14,5 +14,6 @@
   	<module>dawn-demo-logic</module>
   	<module>dawn-demo-model</module>
   	<module>dawn-demo-view</module>
+  	<module>dawn-demo-webapp</module>
   </modules>
 </project>
