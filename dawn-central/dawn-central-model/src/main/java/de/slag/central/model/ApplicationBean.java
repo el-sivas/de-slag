@@ -14,5 +14,7 @@ public interface ApplicationBean {
 	 * @return A human readable label of this bean.
 	 */
 	String getLabel();
+	
+	ApplicationBean get();
 
 }
