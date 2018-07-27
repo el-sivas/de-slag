@@ -16,7 +16,7 @@
         <dependent-module archiveName="dawn-demo-data-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-demo-data/dawn-demo-data">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="dawn-demo-webapp"/>
         <property name="java-output-path" value="/dawn-demo-webapp/target/classes"/>
+        <property name="context-root" value="/app"/>
     </wb-module>
 </project-modules>
