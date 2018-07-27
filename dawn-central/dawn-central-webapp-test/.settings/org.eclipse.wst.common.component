@@ -7,10 +7,13 @@
         <dependent-module archiveName="dawn-central-view-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-central-view/dawn-central-view">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="dawn-central-model-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-central-model/dawn-central-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="dawn-central-logic-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-central-logic/dawn-central-logic">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="dawn-central-model-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-central-model/dawn-central-model">
+        <dependent-module archiveName="dawn-central-data-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-central-data/dawn-central-data">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="dawn-central-data-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-central-data/dawn-central-data">

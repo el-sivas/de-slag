@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>Demo</title>
+</h:head>
+<h:body>
+	<h:form>
+		<div>
+			<h:outputText value="Info: #{demoController.demoInfo}" />
+		</div>
+		<div>
+			<h:link value="this" outcome="index" />
+		</div>
+		<div>
+			<h:link value="start" outcome="start" />
+		</div>
+
+		<div>
+			<h:link value="pages-start" outcome="pages/start" />
+		</div>
+
+		<div>
+			<h:link value="slash-pages-start" outcome="/pages/start" />
+		</div>
+
+		<div>
+			<h:link value="start2" outcome="start2" />
+		</div>
+
+		<div>
+			<h:link value="pages-start2" outcome="pages/start2" />
+		</div>
+		<div>
+			<h:link value="slash-pages-start" outcome="/pages/start2" />
+		</div>
+
+	</h:form>
+</h:body>
+</html>
