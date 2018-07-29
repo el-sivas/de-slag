@@ -6,9 +6,11 @@ import javax.persistence.Basic;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
+@Inheritance
 public abstract class PersistBean implements CreateableBean, Serializable {
 
 	private static final long serialVersionUID = 1L;
