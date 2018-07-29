@@ -1,26 +1,38 @@
 package de.slag.central.data;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public abstract class PersistBean implements CreateableBean {
+import javax.persistence.Basic;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
+@MappedSuperclass
+public abstract class PersistBean implements CreateableBean, Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic
 	private Long id;
-
-	private Date created;
-
-	private Date valitUntil;
+//
+//	private Date created;
+//
+//	private Date valitUntil;
 
 	public Long getId() {
 		return id;
 	}
 
-	public Date getCreated() {
-		return created;
-	}
-
-	public Date getValitUntil() {
-		return valitUntil;
-	}
+//	public Date getCreated() {
+//		return created;
+//	}
+//
+//	public Date getValitUntil() {
+//		return valitUntil;
+//	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -31,7 +43,5 @@ public abstract class PersistBean implements CreateableBean {
 		}
 		return this.compareTo((PersistBean) obj) == 0;
 	}
-
-	
 
 }

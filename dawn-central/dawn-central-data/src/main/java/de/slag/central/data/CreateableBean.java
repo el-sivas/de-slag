@@ -4,7 +4,9 @@ import java.util.Date;
 
 public interface CreateableBean extends Comparable<CreateableBean> {
 
-	Date getCreated();
+	default Date getCreated() {
+		return new Date();
+	}
 
 	Long getId();
 
