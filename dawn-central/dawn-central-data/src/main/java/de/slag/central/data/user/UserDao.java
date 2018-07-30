@@ -1,5 +1,7 @@
 package de.slag.central.data.user;
 
-public interface UserDao {
+import de.slag.central.data.PersistBeanDao;
+
+public interface UserDao extends PersistBeanDao<User>{
 
 }

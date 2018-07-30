@@ -1,4 +1,4 @@
-package de.slag.central.data;
+package de.slag.central.data.database;
 
 import java.util.Collection;
 
@@ -7,16 +7,29 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import de.slag.base.tools.ClassUtils;
+import de.slag.central.data.PersistBean;
 import de.slag.central.data.config.DawnConfig;
 import de.slag.central.data.config.DawnFileConfig;
 
-public class SlagHibernateSupportUtils {
+public class DawnHibernateSupport {
 
 	private static final String HIBERNATE_DIALECT = "hibernate.dialect";
 	private static final String HIBERNATE_CONNECTION_PASSWORD = "hibernate.connection.password";
 	private static final String HIBERNATE_CONNECTION_USERNAME = "hibernate.connection.username";
 	private static final String HIBERNATE_CONNECTION_URL = "hibernate.connection.url";
 	private static final String HIBERNATE_CONNECTION_DRIVER_CLASS = "hibernate.connection.driver_class";
+
+	private static DawnHibernateSupport instance;
+
+	private DawnHibernateSupport() {
+	}
+
+	public static DawnHibernateSupport getInstance() {
+		if (instance == null) {
+			instance = new DawnHibernateSupport();
+		}
+		return instance;
+	}
 
 	public static boolean isDatabaseValid() {
 		getSessionFactory(true);
@@ -63,5 +76,4 @@ public class SlagHibernateSupportUtils {
 	private static Collection<Class> findAnnotatedClasses() {
 		return ClassUtils.getAllSubclassesOf(PersistBean.class);
 	}
-
 }
