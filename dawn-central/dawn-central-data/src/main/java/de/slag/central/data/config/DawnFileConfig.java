@@ -3,6 +3,8 @@ package de.slag.central.data.config;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -69,6 +71,11 @@ public class DawnFileConfig implements DawnConfig {
 			throw new DataException(e);
 		}
 		return new DawnFileConfig(properties);
+	}
+
+	@Override
+	public Collection<Object> keys() {
+		return Collections.unmodifiableCollection(properties.keySet());
 	}
 
 }

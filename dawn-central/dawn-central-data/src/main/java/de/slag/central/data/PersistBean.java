@@ -1,6 +1,7 @@
 package de.slag.central.data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.MappedSuperclass;
+
+import de.slag.base.tools.DateUtils;
 
 @MappedSuperclass
 @Inheritance
@@ -21,9 +24,13 @@ public abstract class PersistBean implements CreateableBean, Serializable {
 	@Basic
 	private Long id;
 
-	private Date created;
+	private Date created = new Date();
 
-	private Date valitUntil;
+	private Date validUntil = DateUtils.toDate(LocalDateTime.of(9999, 12, 31, 23, 59, 59));
+	
+	protected PersistBean() {
+	
+	}
 
 	public Long getId() {
 		return id;
@@ -33,8 +40,8 @@ public abstract class PersistBean implements CreateableBean, Serializable {
 		return created;
 	}
 
-	public Date getValitUntil() {
-		return valitUntil;
+	public Date getValidUntil() {
+		return validUntil;
 	}
 
 	@Override

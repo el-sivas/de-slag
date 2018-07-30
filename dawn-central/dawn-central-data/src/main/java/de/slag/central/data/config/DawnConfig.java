@@ -1,5 +1,7 @@
 package de.slag.central.data.config;
 
+import java.util.Collection;
+
 public interface DawnConfig {
 
 	String HIBERNATE_DIALECT = "hibernate.dialect";
@@ -25,5 +27,7 @@ public interface DawnConfig {
 	default String getStringValue(final String key) {
 		return getValue(key, String.class);
 	}
+	
+	Collection<Object> keys();
 
 }

@@ -8,7 +8,7 @@ public class DawnFileConfigTest {
 	@Test
 	public void test() {
 		final DawnConfig instance = DawnFileConfig.instance();
-		System.out.println(instance.getStringValue("test"));
+		instance.keys().forEach(k -> System.out.println(k + ":" + instance.getStringValue((String) k)));
 	}
 
 }
