@@ -1,6 +1,7 @@
 package de.slag.central.data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.GeneratedValue;
@@ -19,22 +20,22 @@ public abstract class PersistBean implements CreateableBean, Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic
 	private Long id;
-//
-//	private Date created;
-//
-//	private Date valitUntil;
+
+	private Date created;
+
+	private Date valitUntil;
 
 	public Long getId() {
 		return id;
 	}
 
-//	public Date getCreated() {
-//		return created;
-//	}
-//
-//	public Date getValitUntil() {
-//		return valitUntil;
-//	}
+	public Date getCreated() {
+		return created;
+	}
+
+	public Date getValitUntil() {
+		return valitUntil;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
