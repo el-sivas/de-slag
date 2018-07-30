@@ -6,6 +6,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import de.slag.base.tools.ClassUtils;
+import de.slag.central.data.config.DawnConfig;
+import de.slag.central.data.config.DawnFileConfig;
+
 public class SlagHibernateSupportUtils {
 
 	private static final String HIBERNATE_DIALECT = "hibernate.dialect";
@@ -57,7 +61,7 @@ public class SlagHibernateSupportUtils {
 	}
 
 	private static Collection<Class> findAnnotatedClasses() {
-		hier alle ableitungen von PersistBean.class durchscannen
+		return ClassUtils.getAllSubclassesOf(PersistBean.class);
 	}
 
 }
