@@ -1,8 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.slag.central.data.DawnConfig;
-import de.slag.central.data.DawnFileConfig;
+import de.slag.central.data.config.DawnConfig;
+import de.slag.central.data.config.DawnFileConfig;
 
 public class DawnFileConfigTest {
 	

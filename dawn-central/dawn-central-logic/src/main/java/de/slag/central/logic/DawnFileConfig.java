@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
-import de.slag.central.data.DawnConfig;
+import de.slag.central.data.config.DawnConfig;
 
 public class DawnFileConfig implements DawnConfig {
 
