@@ -13,17 +13,31 @@ public class CliOptionsUtils {
 
 	public static String HELP = "h";
 
+	/**
+	 * Creates cli-options with '-h' as default help parameter.
+	 */
 	public static Options createOptions() {
 		final Options o = new Options();
 		o.addOption(HELP, false, "prints this help page");
 		return o;
 	}
 
-	public static CommandLine parse(Options o, String[] args) throws ParseException {
-		return new DefaultParser().parse(o, args);
+	/**
+	 * 
+	 * @param options , for the application defined
+	 * @param args , given to main-method on runtime
+	 * @return {@link CommandLine} to use in application
+	 * @throws ParseException
+	 */
+	public static CommandLine parse(Options options, String[] args) throws ParseException {
+		return new DefaultParser().parse(options, args);
 	}
-
-	public static void printHelpAndExit(Options o) {
+	
+	/**
+	 * Prints cli-help in a user friendly way.
+	 * @param options , for the application defined
+	 */
+	public static void printHelpAndExit(Options options) {
 		final Consumer<Option> oc = new Consumer<Option>() {
 
 			@Override
@@ -36,7 +50,7 @@ public class CliOptionsUtils {
 				System.out.println(sb);
 			}
 		};
-		o.getOptions().forEach(oc);
+		options.getOptions().forEach(oc);
 		System.exit(0);
 	}
 }
