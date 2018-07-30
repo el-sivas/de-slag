@@ -1,4 +1,4 @@
-package de.slag.central.data;
+package de.slag.central.data.config;
 
 public interface DawnConfig {
 

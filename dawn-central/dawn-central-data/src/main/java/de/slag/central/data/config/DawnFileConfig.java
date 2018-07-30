@@ -1,10 +1,12 @@
-package de.slag.central.data;
+package de.slag.central.data.config;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
+
+import de.slag.central.data.DataException;
 
 
 public class DawnFileConfig implements DawnConfig {
