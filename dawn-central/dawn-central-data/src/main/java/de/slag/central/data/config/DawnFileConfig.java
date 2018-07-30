@@ -6,13 +6,31 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
+
 import de.slag.central.data.DataException;
 
-
+/**
+ * Provides a singleton instance of a properties file. There are three ways to
+ * use. Note: Per config file one instance will be created.
+ * <p>
+ * 1. Use method <b>instantiating()</b> without any configuration. The based
+ * config file is <b>dawn-config.properties</b> in user home as default.
+ * </p>
+ * <p>
+ * 2. Use method <b>instantiating()</b> with starting the JRE with system
+ * parameter <b>-Ddawn-config-file</b>=<i>path/to/file</i> and this file will be
+ * used.
+ * </p>
+ * <p>
+ * 3. Use method <b>instantiating(String)</b> to use the given parameter as
+ * location for properties.
+ * </p>
+ */
 public class DawnFileConfig implements DawnConfig {
 
-	private static final String DEFAULT_CONFIG_FILE = "slag-config.properties";
-	
+	private static final String DEFAULT_CONFIG_FILE = "dawn-config.properties";
+
 	private static DawnConfig instance;
 
 	private Properties properties;
@@ -25,15 +43,19 @@ public class DawnFileConfig implements DawnConfig {
 	public Object getValue(String key) {
 		return properties.get(key);
 	}
-	
+
 	public static DawnConfig instance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = instantiating();
 		}
 		return instance;
 	}
 
 	private static DawnConfig instantiating() {
+		final String dawnConfigFile = System.getProperty("dawn-config-file");
+		if (!StringUtils.isBlank(dawnConfigFile)) {
+			return instantiating(dawnConfigFile);
+		}
 		return instantiating(System.getProperty("user.home") + File.separator + DEFAULT_CONFIG_FILE);
 	}
 

@@ -1,6 +1,9 @@
 package de.slag.central.data.database;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -13,13 +16,11 @@ import de.slag.central.data.config.DawnFileConfig;
 
 public class DawnHibernateSupport {
 
-	private static final String HIBERNATE_DIALECT = "hibernate.dialect";
-	private static final String HIBERNATE_CONNECTION_PASSWORD = "hibernate.connection.password";
-	private static final String HIBERNATE_CONNECTION_USERNAME = "hibernate.connection.username";
-	private static final String HIBERNATE_CONNECTION_URL = "hibernate.connection.url";
-	private static final String HIBERNATE_CONNECTION_DRIVER_CLASS = "hibernate.connection.driver_class";
-
 	private static DawnHibernateSupport instance;
+
+	private Collection<DatabaseConnectionProperties> connections = new ArrayList<>();
+
+	private Map<DatabaseConnectionProperties, SessionFactory> con = new HashMap<>();
 
 	private DawnHibernateSupport() {
 	}
@@ -40,24 +41,42 @@ public class DawnHibernateSupport {
 		return getSessionFactory(false);
 	}
 
+	public SessionFactory getSessionFactory(DatabaseConnectionProperties properties) {
+		if (!con.containsKey(properties)) {
+			return con.put(properties, createSessionFactory(properties));
+		}
+		return con.get(properties);
+	}
+
+	private SessionFactory createSessionFactory(DatabaseConnectionProperties properties) {
+		return null;
+	}
+
 	private static SessionFactory getSessionFactory(boolean validate) {
 		final DawnConfig dawnConfig = DawnFileConfig.instance();
 
+		String driverClass = dawnConfig.getStringValue(DawnConfig.HIBERNATE_CONNECTION_DRIVER_CLASS);
+		String url = dawnConfig.getStringValue(DawnConfig.HIBERNATE_CONNECTION_URL);
+		String username = dawnConfig.getStringValue(DawnConfig.HIBERNATE_CONNECTION_USERNAME);
+		String password = dawnConfig.getStringValue(DawnConfig.HIBERNATE_CONNECTION_PASSWORD);
+		String dialect = dawnConfig.getStringValue(DawnConfig.HIBERNATE_DIALECT);
+
+		return createSessionFactory(validate, driverClass, url, username, password, dialect);
+	}
+
+	private static SessionFactory createSessionFactory(boolean validate, String driverClass, String url,
+			String username, String password, String dialect) {
 		Configuration configuration = new Configuration();
-
 		findAnnotatedClasses().forEach(c -> configuration.addAnnotatedClass(c));
-		configuration.setProperty(HIBERNATE_CONNECTION_DRIVER_CLASS,
-				dawnConfig.getStringValue(HIBERNATE_CONNECTION_DRIVER_CLASS));
+		configuration.setProperty(DawnConfig.HIBERNATE_CONNECTION_DRIVER_CLASS, driverClass);
 
-		configuration.setProperty(HIBERNATE_CONNECTION_URL, dawnConfig.getStringValue(HIBERNATE_CONNECTION_URL));
+		configuration.setProperty(DawnConfig.HIBERNATE_CONNECTION_URL, url);
 
-		configuration.setProperty(HIBERNATE_CONNECTION_USERNAME,
-				dawnConfig.getStringValue(HIBERNATE_CONNECTION_USERNAME));
+		configuration.setProperty(DawnConfig.HIBERNATE_CONNECTION_USERNAME, username);
 
-		configuration.setProperty(HIBERNATE_CONNECTION_PASSWORD,
-				dawnConfig.getStringValue(HIBERNATE_CONNECTION_PASSWORD));
+		configuration.setProperty(DawnConfig.HIBERNATE_CONNECTION_PASSWORD, password);
 
-		configuration.setProperty(HIBERNATE_DIALECT, dawnConfig.getStringValue(HIBERNATE_DIALECT));
+		configuration.setProperty(DawnConfig.HIBERNATE_DIALECT, dialect);
 
 		configuration.setProperty("hibernate.show_sql", "true");
 		configuration.setProperty("hibernate.connection.pool_size", "10");
