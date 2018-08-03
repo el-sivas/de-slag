@@ -23,10 +23,24 @@
 		<hibernate.annotations.version>3.5.6-Final</hibernate.annotations.version>
 		<hibernate.tools.version>5.3.3.Final</hibernate.tools.version>
 		<spring.context.version>5.0.8.RELEASE</spring.context.version>
+		<apache.odftoolkit.version>0.8.2-incubating</apache.odftoolkit.version>
+		<apache.commons.csv.version>1.5</apache.commons.csv.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-csv</artifactId>
+				<version>${apache.commons.csv.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.odftoolkit</groupId>
+				<artifactId>simple-odf</artifactId>
+				<version>${apache.odftoolkit.version}</version>
+			</dependency>
 
 			<!-- spring -->
 			<dependency>
