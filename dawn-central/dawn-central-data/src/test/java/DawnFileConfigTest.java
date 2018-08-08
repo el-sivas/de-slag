@@ -1,4 +1,6 @@
-import org.junit.jupiter.api.Test;
+
+
+import org.junit.Test;
 
 import de.slag.central.data.config.DawnConfig;
 import de.slag.central.data.config.DawnFileConfig;
