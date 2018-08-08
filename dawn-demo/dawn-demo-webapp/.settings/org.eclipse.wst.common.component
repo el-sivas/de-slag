@@ -16,6 +16,12 @@
         <dependent-module archiveName="dawn-demo-data-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-demo-data/dawn-demo-data">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="dawn-central-data-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-central-data/dawn-central-data">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="dawn-base-tools-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-base-tools/dawn-base-tools">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/dawn-demo-webapp/target/classes"/>
         <property name="context-root" value="/app"/>
     </wb-module>

@@ -3,6 +3,7 @@ package de.slag.central.logic;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -37,6 +38,11 @@ public class DawnFileConfig implements DawnConfig {
 			throw new LogicException(e);
 		}
 		return new DawnFileConfig(properties);
+	}
+
+	@Override
+	public Collection<Object> keys() {
+		return properties.keySet();
 	}
 
 }

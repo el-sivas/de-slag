@@ -4,7 +4,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
@@ -25,13 +24,9 @@ public class HibernateDemo {
 
 		final Session session = sessionFactory.openSession();
 
-		// manual query to test connection and db user rights
-		final Transaction beginTransaction = session.beginTransaction();
-		final String queryString = "CREATE TABLE test_table (test_column varchar(255))";
-		session.createSQLQuery(queryString).executeUpdate();
-		beginTransaction.commit();
-
-		session.save(new XyEntity());
+		final XyEntity xyEntity = new XyEntity();
+		xyEntity.setName(String.valueOf(System.currentTimeMillis()));
+		session.save(xyEntity);
 
 		session.close();
 		sessionFactory.close();
