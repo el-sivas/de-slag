@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -20,10 +23,17 @@ public class CsvUtils {
 
 	private static final Log LOG = LogFactory.getLog(CsvUtils.class);
 
+	private static final char DEFAULT_DELIMITER = ';';
+
+	public static Collection<Collection<String>> toLines(Collection<String> header, Collection<CSVRecord> records) {
+		return records.stream().map(r -> header.stream().map(h -> r.get(h)).collect(Collectors.toList()))
+				.collect(Collectors.toList());
+	}
+
 	public static void write(final String filename, Collection<String> header, Collection<Collection<String>> lines)
 			throws IOException {
 		final BufferedWriter writer = Files.newBufferedWriter(Paths.get(filename));
-		final CSVFormat format = CSVFormat.newFormat(';').withHeader(header.toArray(new String[0]))
+		final CSVFormat format = CSVFormat.newFormat(DEFAULT_DELIMITER).withHeader(header.toArray(new String[0]))
 				.withRecordSeparator("\r\n");
 		final CSVPrinter csvPrinter = new CSVPrinter(writer, format);
 		for (Collection<String> collection : lines) {
@@ -40,15 +50,24 @@ public class CsvUtils {
 	}
 
 	public static Collection<CSVRecord> getRecords(final String filename) throws IOException {
-		final BufferedReader in = Files.newBufferedReader(Paths.get(filename));
-		final CSVFormat format = CSVFormat.newFormat(';').withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim();
-		final CSVParser parse = format.parse(in);
-		return parse.getRecords();
+		return getRecords(filename, new String[0]);
 	}
 
 	public static Collection<CSVRecord> getRecords(final String filename, String... header) throws IOException {
-		final BufferedReader in = Files.newBufferedReader(Paths.get(filename));
-		final CSVFormat format = CSVFormat.newFormat(';').withHeader(header);
+		final Path path = Paths.get(filename);
+		if (!Files.exists(path)) {
+			LOG.warn(path + " not exists, return default value.");
+			return Collections.emptyList();
+		}
+
+		final BufferedReader in = Files.newBufferedReader(path);
+		final CSVFormat format;
+		if (header != null && header.length > 0) {
+			format = CSVFormat.newFormat(DEFAULT_DELIMITER).withHeader(header);
+		} else {
+			format = CSVFormat.newFormat(DEFAULT_DELIMITER).withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim();
+		}
+
 		final CSVParser parse = format.parse(in);
 		final List<CSVRecord> records = parse.getRecords();
 		validate(records, header);
