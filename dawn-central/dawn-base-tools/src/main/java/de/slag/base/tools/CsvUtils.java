@@ -49,6 +49,10 @@ public class CsvUtils {
 		return getRecords(filename, header.toArray(new String[0]));
 	}
 
+	/**
+	 * ...first record as header
+	 */
+	
 	public static Collection<CSVRecord> getRecords(final String filename) throws IOException {
 		return getRecords(filename, new String[0]);
 	}
