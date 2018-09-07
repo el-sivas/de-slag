@@ -16,9 +16,7 @@ public class RibadeoParseLogicUtils {
 
 			@Override
 			public Double getPrice() {
-				final Element priceTable = RibadeoSeptember2018ParseFunctions.DOCUMENT_TO_PRICE_TABLE.apply(document);
-
-				return RibadeoSeptember2018ParseFunctions.PRICE_TABLE_TO_PRICE.apply(priceTable);
+				return RibadeoSeptember2018ParseFunctions.DOCUMENT_TO_PRICE.apply(document);
 			}
 
 			@Override
@@ -34,8 +32,7 @@ public class RibadeoParseLogicUtils {
 
 			@Override
 			public String getCurrency() {
-				final Element priceTable = RibadeoSeptember2018ParseFunctions.DOCUMENT_TO_PRICE_TABLE.apply(document);
-				return RibadeoSeptember2018ParseFunctions.PRICE_TABLE_TO_CURRENCY.apply(priceTable);
+				return RibadeoSeptember2018ParseFunctions.DOCUMENT_TO_CURRENCY.apply(document);
 			}
 
 			@Override

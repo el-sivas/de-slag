@@ -3,10 +3,7 @@ package de.slag.base.app.fin.ribadeo.parse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,28 +13,7 @@ import de.slag.base.app.fin.FinLogicExecption;
 
 public class RibadeoSeptember2018ParseFunctions {
 
-	public static final Function<Document, Element> DOCUMENT_TO_PRICE_TABLE = d -> {
-		return getUniqueElementByClass(d, "GER");
-	};
-
-	public static final Function<Element, Double> PRICE_TABLE_TO_PRICE = t -> {
-		String s = betragsfeld(t)[0];
-		return Double.valueOf(s.replaceAll(",", "."));
-	};
-
-	public static final Function<Element, String> PRICE_TABLE_TO_CURRENCY = t -> {
-		return betragsfeld(t)[1];
-	};
-
-	private static Element getUniqueElementByClass(Document doc, String className) {
-		final Elements elements = doc.getElementsByClass(className);
-		if (elements.size() != 1) {
-			throw new FinLogicExecption("elements expected: 1, current: " + elements.size());
-		}
-		return elements.first();
-	}
-
-	public static Function<Document, Date> DOCUMENT_TO_TODAYS_DATE = d -> {
+	public static final Function<Document, Date> DOCUMENT_TO_TODAYS_DATE = d -> {
 		final Element tableGer = getUniqueElementByClass(d, "GER");
 		final Element dateField = tableGer.child(5);
 		final Element dateTag = dateField.child(0);
@@ -47,10 +23,9 @@ public class RibadeoSeptember2018ParseFunctions {
 		} catch (ParseException e) {
 			throw new FinLogicExecption(e);
 		}
-
 	};
 
-	public static Function<Element, String> DOCUMENT_TO_ISIN = d -> {
+	public static final Function<Element, String> DOCUMENT_TO_ISIN = d -> {
 		final Elements elements = d.getElementsByClass("STAMMDATEN");
 		if (elements.size() != 1) {
 			throw new FinLogicExecption("elements expected: 1, current: " + elements.size());
@@ -63,18 +38,25 @@ public class RibadeoSeptember2018ParseFunctions {
 		return isinField.text();
 	};
 
-	// TODO refactoring
-	private static String[] betragsfeld(Element t) {
-		final Elements elements = t.getElementsByClass("ZAHL POSITIV");
-		Predicate<Element> p = e -> e.text().contains(" ");
+	public static final Function<Document, Double> DOCUMENT_TO_PRICE = doc -> {
+		final Element tableGer = getUniqueElementByClass(doc, "GER");
+		final Element feldBetrag = tableGer.child(2);
+		final String text = feldBetrag.text();
+		return Double.valueOf(text.split(" ")[0].replaceAll(",", "."));
 
-		final List<Element> collect = elements.stream().filter(p).collect(Collectors.toList());
-		if (collect.size() != 1) {
-			throw new FinLogicExecption("elements expected: 1, current: " + collect.size());
+	};
+
+	public static final Function<Document, String> DOCUMENT_TO_CURRENCY = d -> {
+		final Element uniqueElementByClass = getUniqueElementByClass(d, "GER");
+		final Element feldBetrag = uniqueElementByClass.child(2);
+		return feldBetrag.text().split(" ")[1];
+	};
+
+	private static Element getUniqueElementByClass(Document doc, String className) {
+		final Elements elements = doc.getElementsByClass(className);
+		if (elements.size() != 1) {
+			throw new FinLogicExecption("elements expected: 1, current: " + elements.size());
 		}
-		final Element element = collect.get(0);
-		final String text = element.text();
-		final String[] split = text.split(" ");
-		return split;
+		return elements.first();
 	}
 }
