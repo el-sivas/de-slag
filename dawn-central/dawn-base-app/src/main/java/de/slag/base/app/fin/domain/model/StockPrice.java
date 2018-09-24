@@ -5,9 +5,10 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Date;
 
+import de.slag.base.app.fin.domain.DomainEntity;
 import de.slag.base.tools.DateUtils;
 
-public class StockPrice {
+public class StockPrice implements DomainEntity {
 
 	private BigDecimal price;
 
