@@ -30,13 +30,21 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
+<!-- 			<dependency>
 				<groupId>com.sun</groupId>
 				<artifactId>tools</artifactId>
 				<version>${com.sun.tools.version}</version>
 				<scope>system</scope>
 				<systemPath>/home/sivas/dev/3rd-party-artefacts/tools-1.7.0.13.jar</systemPath>
+			</dependency> -->
+
+			<dependency>
+				<groupId>com.sun</groupId>
+				<artifactId>tools</artifactId>
+				<version>${com.sun.tools.version}</version>
+				<!-- <scope>system</scope> -->
 			</dependency>
+
 
 			<dependency>
 				<groupId>org.jsoup</groupId>
