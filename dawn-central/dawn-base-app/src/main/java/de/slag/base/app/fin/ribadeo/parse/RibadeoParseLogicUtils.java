@@ -4,13 +4,12 @@ import java.time.LocalDate;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import de.slag.base.tools.DateUtils;
 
 public class RibadeoParseLogicUtils {
 
-	public static RibadeoImportHolder parse(String html) {
+	public static RibadeoImportHolder parseAktie(String html) {
 		final Document document = Jsoup.parse(html);
 		return new RibadeoImportHolder() {
 

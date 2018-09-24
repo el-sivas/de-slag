@@ -18,7 +18,7 @@ public class RibadeoParseLogicUtilsTest {
 		final byte[] readAllBytes = Files.readAllBytes(path);
 		final String html = new String(readAllBytes);
 				
-		final RibadeoImportHolder parse = RibadeoParseLogicUtils.parse(html);
+		final RibadeoImportHolder parse = RibadeoParseLogicUtils.parseAktie(html);
 		System.out.println(parse);
 		
 	}
