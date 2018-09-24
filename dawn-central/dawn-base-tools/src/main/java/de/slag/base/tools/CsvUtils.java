@@ -2,6 +2,7 @@ package de.slag.base.tools;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,9 +31,20 @@ public class CsvUtils {
 				.collect(Collectors.toList());
 	}
 
+	public static void write(final File file, Collection<String> header, Collection<Collection<String>> lines)
+			throws IOException {
+		write(header, lines, Paths.get(file.getAbsolutePath()));
+	}
+
 	public static void write(final String filename, Collection<String> header, Collection<Collection<String>> lines)
 			throws IOException {
-		final BufferedWriter writer = Files.newBufferedWriter(Paths.get(filename));
+		write(header, lines, Paths.get(filename));
+	}
+
+	public static void write(Collection<String> header, Collection<Collection<String>> lines, final Path path)
+			throws IOException {
+		
+		final BufferedWriter writer = Files.newBufferedWriter(path);
 		final CSVFormat format = CSVFormat.newFormat(DEFAULT_DELIMITER).withHeader(header.toArray(new String[0]))
 				.withRecordSeparator("\r\n");
 		final CSVPrinter csvPrinter = new CSVPrinter(writer, format);
@@ -41,7 +53,6 @@ public class CsvUtils {
 		}
 		csvPrinter.flush();
 		csvPrinter.close();
-
 	}
 
 	public static Collection<CSVRecord> getRecords(final String filename, Collection<String> header)
@@ -52,7 +63,7 @@ public class CsvUtils {
 	/**
 	 * ...first record as header
 	 */
-	
+
 	public static Collection<CSVRecord> getRecords(final String filename) throws IOException {
 		return getRecords(filename, new String[0]);
 	}
