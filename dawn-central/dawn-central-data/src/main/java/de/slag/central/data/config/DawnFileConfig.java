@@ -9,8 +9,10 @@ import java.util.Objects;
 import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-import de.slag.central.data.DataException;
+import de.slag.central.data.impl.DataException;
 
 /**
  * Provides a singleton instance of a properties file. There are three ways to
@@ -31,6 +33,8 @@ import de.slag.central.data.DataException;
  */
 public class DawnFileConfig implements DawnConfig {
 
+	private static final Log LOG = LogFactory.getLog(DawnFileConfig.class);
+
 	private static final String DEFAULT_CONFIG_FILE = "dawn-config.properties";
 
 	private static DawnConfig instance;
@@ -43,7 +47,9 @@ public class DawnFileConfig implements DawnConfig {
 
 	@Override
 	public Object getValue(String key) {
-		return properties.get(key);
+		final Object object = properties.get(key);
+		LOG.info("property: '" + key + "', value: '" + object + "'");
+		return object;
 	}
 
 	public static DawnConfig instance() {

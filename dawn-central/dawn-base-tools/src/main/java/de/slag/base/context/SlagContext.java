@@ -44,7 +44,7 @@ public class SlagContext {
 		final Set<BeanDefinition> candidateComponents = scanner.findCandidateComponents("de.slag");
 		for (BeanDefinition beanDefinition : candidateComponents) {
 			final String beanClassName = beanDefinition.getBeanClassName();
-			LOG.fatal("register: " + beanClassName);
+			LOG.info("register: " + beanClassName);
 			appCtx.registerBeanDefinition(beanClassName, beanDefinition);
 		}
 	}

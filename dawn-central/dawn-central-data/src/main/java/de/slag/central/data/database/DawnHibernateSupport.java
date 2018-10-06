@@ -3,14 +3,14 @@ package de.slag.central.data.database;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.Objects;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import de.slag.base.tools.ClassUtils;
-import de.slag.central.data.PersistBean;
+import de.slag.central.data.impl.PersistBean;
 
 public class DawnHibernateSupport {
 
@@ -68,7 +68,6 @@ public class DawnHibernateSupport {
 
 	private Configuration configuration(String driverClass, String url, String username, String password,
 			String dialect) {
-		
 		
 		final Configuration configuration = new Configuration();
 		configuration.setProperty("hibernate.connection.driver_class", driverClass);
