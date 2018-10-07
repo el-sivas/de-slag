@@ -3,7 +3,6 @@ package de.slag.central.service;
 import java.util.Optional;
 
 import de.slag.central.model.ApplicationBean;
-import de.slag.central.model.ApplicationBeanCredentials;
 
 public interface ApplicationBeanService<AB extends ApplicationBean> {
 

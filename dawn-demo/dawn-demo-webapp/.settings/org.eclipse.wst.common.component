@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
     <wb-module deploy-name="dawn-demo-webapp-0.0.1-SNAPSHOT">
+                
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+                
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <dependent-module archiveName="dawn-demo-view-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-demo-view/dawn-demo-view">
             <dependency-type>uses</dependency-type>
@@ -22,7 +27,17 @@
         <dependent-module archiveName="dawn-base-tools-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-base-tools/dawn-base-tools">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="dawn-central-logic-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-central-logic/dawn-central-logic">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="dawn-central-model-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dawn-central-model/dawn-central-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+                
         <property name="java-output-path" value="/dawn-demo-webapp/target/classes"/>
+                
         <property name="context-root" value="/app"/>
+            
     </wb-module>
+    
 </project-modules>

@@ -17,10 +17,5 @@
 			<artifactId>dawn-central-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>de.slag.central</groupId>
-			<artifactId>dawn-central-data</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 	</dependencies>
 </project>

@@ -1,20 +1,29 @@
 package de.slag.central.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
-public interface ApplicationBean {
+import de.slag.base.tools.DateUtils;
 
-	Long getId();
+public abstract class ApplicationBean {
 
-	LocalDate getCreated();
+	private static final Date END_OF_DEKAMILLENIAL = DateUtils.toDate(LocalDateTime.of(9999, 12, 31, 23, 59, 59));
 
-	boolean isDeleted();
+	private Long id;
 
-	/**
-	 * @return A human readable label of this bean.
-	 */
-	String getLabel();
-	
-	ApplicationBean get();
+	private Date createdAt = new Date();
 
+	private Date validUntil = END_OF_DEKAMILLENIAL;
+
+	public Long getId() {
+		return id;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public boolean isDeleted() {
+		return validUntil.before(new Date());
+	}
 }

@@ -15,5 +15,4 @@ public class ApplicationException extends RuntimeException {
 	public ApplicationException(final Throwable t) {
 		super(t);
 	}
-
 }
