@@ -1,5 +1,7 @@
 package de.slag.central.view.controller;
 
-public interface DawnController {
+import java.io.Serializable;
+
+public interface DawnController extends Serializable {
 
 }

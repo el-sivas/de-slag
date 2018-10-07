@@ -21,7 +21,7 @@ public class UserServiceImpl extends AbstractApplicationBeanService<User> implem
 	
 	@Override
 	public User create(Optional<ApplicationBeanCredentials<User>> credentials) {
-		return getCreator().get();
+		return getSupplier().get();
 	}
 
 	@Override
@@ -36,6 +36,6 @@ public class UserServiceImpl extends AbstractApplicationBeanService<User> implem
 
 	@Override
 	public User loadByUsername(String username) {
-		return ((UserDao)getDao()).loadByUsername(username, getCreator());
+		return ((UserDao)getDao()).loadByUsername(username, getSupplier());
 	}
 }

@@ -8,4 +8,8 @@ public class DataException extends RuntimeException {
 	public DataException(Throwable t) {
 		super(t);
 	}
+	
+	public DataException(String s) {
+		super(s);
+	}
 }

@@ -29,6 +29,8 @@ import de.slag.central.view.dbtool.structure.DbUpdateService;
 @Controller
 public class DbToolController implements DawnController {
 
+	private static final long serialVersionUID = 1L;
+
 	@Resource
 	private DbInfoService dbInfoService;
 

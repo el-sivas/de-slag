@@ -1,6 +1,6 @@
 package de.slag.central.logic.impl;
 
-import java.util.function.Consumer;
+import java.util.Collection;
 import java.util.function.Supplier;
 
 import de.slag.central.data.ApplicationBeanDao;
@@ -12,7 +12,7 @@ public abstract class AbstractApplicationBeanService<AB extends ApplicationBean>
 
 	protected abstract ApplicationBeanDao<AB> getDao();
 
-	protected Supplier<AB> getCreator() {
+	protected Supplier<AB> getSupplier() {
 		return () -> {
 			try {
 				return getBeanClass().newInstance();
@@ -31,7 +31,7 @@ public abstract class AbstractApplicationBeanService<AB extends ApplicationBean>
 	}
 
 	public AB loadBy(long id) {
-		return getDao().loadBy(id, getCreator());
+		return getDao().loadBy(id, getSupplier());
 	}
 
 	public void save(AB bean) {
@@ -41,6 +41,14 @@ public abstract class AbstractApplicationBeanService<AB extends ApplicationBean>
 
 	public void delete(AB bean) {
 		getDao().delete(bean);
+	}
+	
+	public void delete(Long id) {
+		getDao().delete(id);
+	}
+	
+	public Collection<AB> findAll() {
+		return getDao().findAll(getSupplier());
 	}
 
 }

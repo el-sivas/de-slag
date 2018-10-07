@@ -1,5 +1,6 @@
 package de.slag.central.service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import de.slag.central.model.ApplicationBean;
@@ -11,6 +12,10 @@ public interface ApplicationBeanService<AB extends ApplicationBean> {
 	void save(AB bean);
 
 	void delete(AB bean);
+	
+	void delete(Long id);
+	
+	Collection<AB> findAll();
 
 	default AB create() {
 		return create(Optional.empty());

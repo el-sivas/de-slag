@@ -13,13 +13,19 @@
 </h:head>
 <h:body>
 	<h:form>
-		<c:set var="pc" value="#{cis.get('startController')}" />
-		
+		<c:set var="pc" value="#{cis.get('admController')}" />
+
 		<ui:include src="header.xhtml" />
 
-		<h:outputText value="DASHBOARD" />
+		<p:fieldset legend="Users" toggleable="true" toggleSpeed="100"
+			collapsed="true">
+			<p:dataTable var="user" value="#{pc.allUsers}">
+				<p:column headerText="Description">
+					<h:outputText value="#{user.label}" />
+				</p:column>
 
-		<div>hier gibts noch nix zu sehen</div>
+			</p:dataTable>
+		</p:fieldset>
 	</h:form>
 </h:body>
 </html>

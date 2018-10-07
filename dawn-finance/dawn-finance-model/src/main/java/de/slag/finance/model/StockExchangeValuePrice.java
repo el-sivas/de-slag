@@ -6,7 +6,7 @@ import javax.money.MonetaryAmount;
 
 public class StockExchangeValuePrice {
 
-	private StockExchangeValue stockExchangeValue;
+	private SEValue stockExchangeValue;
 
 	private MonetaryAmount price;
 

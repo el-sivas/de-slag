@@ -1,5 +1,6 @@
 package de.slag.central.data.impl;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import de.slag.central.data.config.DawnConfig;
@@ -15,6 +16,10 @@ public abstract class AbstractDao {
 		final DawnHibernateSupport instance = DawnHibernateSupport.getInstance();
 		final SessionFactory sessionFactory = instance.getSessionFactory(creating);
 		return sessionFactory;
+	}
+	
+	protected Session openSession() {
+		return getSessionFactory().openSession();
 	}
 
 }

@@ -20,6 +20,7 @@ public class ControllerInjectionSupport {
 			return dawnController;
 		}
 		final ApplicationController applicationController = (ApplicationController) dawnController;
+		
 		asserUserIsLoggedIn(applicationController);
 		return applicationController;
 
