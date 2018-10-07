@@ -1,12 +1,13 @@
 package de.slag.central.view;
 
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
+import org.springframework.stereotype.Component;
 
 import de.slag.central.model.adm.User;
 
 @SessionScoped
-@ManagedBean(name="sessionContext")
+@Component
 public class SessionContext {
 	
 	private User currentUser;

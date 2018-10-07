@@ -12,15 +12,24 @@
 </h:head>
 <h:body>
 	<h:form>
+		<c:set var="pc" value="#{cis.get('loginController')}" />
+
+
+
+		<p:fieldset legend="LOGIN" style="margin-bottom:6px">
+
+			<div>
+				<p:inputText value="#{pc.username}" />
+				<p:password value="#{pc.password}" />
+
+			</div>
+			<p:commandButton value="LOGIN" id="btn_login" action="#{pc.login}"
+				ajax="false" />
+		</p:fieldset>
+
 		<div>
-			<p:inputText value="#{loginController.username}" />
-			<p:password value="#{loginController.password}" />
-
+			<h:link value="DB-Tool" outcome="dbtool" />
 		</div>
-		<p:commandButton value="LOGIN" id="btn_login"
-			action="#{loginController.login}" ajax="false" />
-
-
 	</h:form>
 </h:body>
 </html>

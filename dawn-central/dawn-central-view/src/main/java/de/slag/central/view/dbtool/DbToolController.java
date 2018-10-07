@@ -2,93 +2,117 @@ package de.slag.central.view.dbtool;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.apache.jena.iri.impl.Test;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.stereotype.Controller;
 
 import de.slag.base.tools.LoggingUtils;
+import de.slag.base.tools.SystemUtils;
 import de.slag.central.DawnApplicationContext;
-import de.slag.central.DawnHibernateService;
-import de.slag.central.model.adm.User;
-import de.slag.central.service.adm.UserService;
+import de.slag.central.view.controller.DawnController;
+import de.slag.central.view.controller.dev.DevController;
+import de.slag.central.view.dbtool.actions.DbAction;
+import de.slag.central.view.dbtool.actions.DbActionFactory;
+import de.slag.central.view.dbtool.actions.DbActionResult;
+import de.slag.central.view.dbtool.content.DbUserService;
+import de.slag.central.view.dbtool.structure.DbUpdateService;
 
-@SessionScoped
-@ManagedBean(name = "dbToolController")
-public class DbToolController {
+@Controller
+public class DbToolController implements DawnController {
 
-	private String state;
+	private Map<Long, String> info = new HashMap<>();
 
-	private List<String> info = new ArrayList<>();
+	private Collection<DbAction> dbActions = new ArrayList<>();
 
 	@PostConstruct
 	public void init() {
 		LoggingUtils.activateLogging();
-		state = "successfully started";
+		addDbActions();
 	}
 
-	public String getState() {
-		final String state = this.state;
-		this.state = null;
-		return state;
+	public void addDbActions() {
+		dbActions.add(DbActionFactory.create(new Supplier<DbActionResult>() {
+
+			@Override
+			public DbActionResult get() {
+				initContext();
+				return DbActionResult.noErrors();
+			}
+		}, "Init application context"));
+
+		dbActions.add(DbActionFactory.create(new Supplier<DbActionResult>() {
+
+			@Override
+			public DbActionResult get() {
+				assertDatabaseUpdated();
+				return DbActionResult.noErrors();
+			}
+		}, "Database update"));
+
+		dbActions.add(DbActionFactory.create(new Supplier<DbActionResult>() {
+
+			@Override
+			public DbActionResult get() {
+				assertAdminUser();
+				return DbActionResult.noErrors();
+			}
+		}, "Admin Users"));
+
 	}
 
 	public void addInfo(String s) {
-		info.add(0, s);
+		info.put(System.nanoTime(), s);
 	}
 
 	public String getInfo() {
+		final List<Long> keys = new ArrayList<>(info.keySet());
+		Collections.sort(keys, Collections.reverseOrder());
+
 		final StringBuilder sb = new StringBuilder();
-		info.forEach(e -> sb.append(e + "\n"));
+		keys.forEach(l -> sb.append(info.get(l) + "\n"));
+
 		return sb.toString();
 	}
 
 	public Date getTime() {
-		return new Date();
+		return SystemUtils.getStartTime();
 	}
 
 	public void initContext() {
 		DawnApplicationContext.getContext();
-
-		final Collection<Class<?>> registeredClasses = DawnApplicationContext.getRegisteredClasses();
-		final StringBuilder sb = new StringBuilder();
-		registeredClasses.forEach(r -> sb.append(r.toGenericString() + "\n"));
-
-		info.add("registered classes:\n" + sb.toString());
-		state = "context initialized";
+		addInfo("application context initialized");
 	}
 
 	public void assertDatabaseUpdated() {
-		final BeanFactory beanFactory = getBeanFactory();
-		final DawnHibernateService dawnHibernateService = beanFactory.getBean(DawnHibernateService.class);
-		dawnHibernateService.updateDatabase();
-		state = "db update succesful";
-		info.add("db update done.");
+		getBeanFactory().getBean(DbUpdateService.class).updateDatabase();
+		addInfo("db update done");
 	}
 
-	public void asssertAdminUser() {
-		final UserService userService = getBeanFactory().getBean(UserService.class);
+	public void assertAdminUser() {
+		getBeanFactory().getBean(DbUserService.class).assertAdminUsers();
+		addInfo("admin users asserted");
+	}
 
-		final String username = "sysadm";
-		
-		User user = userService.loadByUsername(username);
-		if(user == null) {
-			user = userService.create();
-			user.setUsername("sysadm");
-		}		
-		
-		user.setActive(true);
-		user.setPassword("slag");
-		userService.save(user);
-		info.add("Adm User asserted");
-
+	public Collection<DbAction> getDbActions() {
+		return dbActions;
 	}
 
 	public BeanFactory getBeanFactory() {
 		return DawnApplicationContext.getContext().getAutowireCapableBeanFactory();
+	}
+
+	public void startAll() {
+		dbActions.forEach(a -> a.run());
 	}
 }

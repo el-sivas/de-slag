@@ -17,6 +17,9 @@ import de.slag.central.service.adm.UserService;
 @Service
 public class UserServiceImpl extends AbstractApplicationBeanService<User> implements UserService {
 
+	@Resource
+	private UserDao userDao;
+	
 	@Override
 	public User create(Optional<ApplicationBeanCredentials<User>> credentials) {
 		return getCreator().get();
@@ -29,7 +32,7 @@ public class UserServiceImpl extends AbstractApplicationBeanService<User> implem
 
 	@Override
 	protected ApplicationBeanDao<User> getDao() {
-		return DawnApplicationContext.getContext().getBean(UserDao.class);
+		return userDao;
 	}
 
 	@Override

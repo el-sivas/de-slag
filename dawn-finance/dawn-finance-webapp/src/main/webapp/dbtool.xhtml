@@ -11,26 +11,37 @@
 	<title>SLAG DB-Tool</title>
 </h:head>
 <h:body>
-	<c:set var="pc" value="#{dbToolController}" />
+	<c:set var="pc" value="#{cis.get('dbToolController')}" />
 	<h:form>
 		<div>
-			<h:outputText value="Time: #{pc.time}" />
+			<h:outputText value="Start-Time: #{pc.time}"
+				style="font-family:monospace" />
 		</div>
-		<div>
-			<h:outputText value="State: #{pc.state}" />
-		</div>
-		<div>
-			<p:commandButton value="INIT CONTEXT" id="btn_init_ctx"
-				action="#{pc.initContext}" ajax="false" />
-		</div>
-		<div>
-			<p:commandButton value="DB UPDATE" id="btn_init_dbupdate"
-				action="#{pc.assertDatabaseUpdated}" ajax="false" />
-		</div>
-		<div>
-			<p:commandButton value="ADM USER" id="btn_assert_adm_user"
-				action="#{pc.asssertAdminUser}" ajax="false" />
-		</div>
+
+		<p:fieldset legend="DB Actions" style="margin-bottom:6px">
+			<p:dataTable var="dbAction" value="#{pc.dbActions}"
+				style="margin-bottom:6px">
+				<p:column headerText="Description">
+					<h:outputText value="#{dbAction.label}" />
+				</p:column>
+				<p:column headerText="done" style="width:144px;">
+					<h:outputText value="#{dbAction.done}" />
+				</p:column>
+				<p:column headerText="errors" style="width:144px;">
+					<h:outputText value="#{dbAction.errors}" />
+				</p:column>
+				<p:column style="width:24px;">
+					<p:commandLink id="run" action="#{dbAction.run}" ajax="false">
+						<h:outputText value="run" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+			<div>
+				<p:commandButton value="RUN ALL" id="btn_all"
+					action="#{pc.startAll}" ajax="false" />
+			</div>
+
+		</p:fieldset>
 		<div>
 			<p:inputTextarea rows="6" cols="100" autoResize="false"
 				style="font-family:monospace" value="#{pc.info}" readonly="true" />
