@@ -5,7 +5,7 @@ import java.util.Date;
 
 import de.slag.base.tools.DateUtils;
 
-public abstract class ApplicationBean implements Labelable {
+public abstract class ApplicationBean {
 
 	private static final Date END_OF_DEKAMILLENIAL = DateUtils.toDate(LocalDateTime.of(9999, 12, 31, 23, 59, 59));
 

@@ -8,7 +8,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>dawn-finance-model</artifactId>
-		<properties>
+	<properties>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 	</properties>
@@ -16,6 +16,10 @@
 		<dependency>
 			<groupId>de.slag.central</groupId>
 			<artifactId>dawn-central-model</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.javamoney</groupId>
+			<artifactId>moneta</artifactId>
 		</dependency>
 	</dependencies>
 </project>
