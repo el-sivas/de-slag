@@ -14,7 +14,7 @@
 		<spring.version>5.0.3.RELEASE</spring.version>
 		<mysql.version>6.0.6</mysql.version>
 		<mariadb.driver.version>2.2.6</mariadb.driver.version>
-		<log4j.version>2.10.0</log4j.version>
+		<log4j.version>2.11.1</log4j.version>
 		<sun.jsf.version>2.2.16</sun.jsf.version>
 		<javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
 		<javax.servlet.servlet.api.version>2.5</javax.servlet.servlet.api.version>
@@ -27,6 +27,7 @@
 		<apache.commons.csv.version>1.5</apache.commons.csv.version>
 		<com.sun.tools.version>1.7.0.13</com.sun.tools.version>
 		<org.javamoney.version>0.9</org.javamoney.version>
+		<slf4j.version>1.7.25</slf4j.version>
 	</properties>
 
 	<dependencyManagement>
@@ -40,8 +41,7 @@
 				<groupId>com.sun</groupId>
 				<artifactId>tools</artifactId>
 				<version>${com.sun.tools.version}</version>
-				<scope>system</scope>
-				<systemPath>/home/sivas/dev/3rd-party-artefacts/tools-1.7.0.13.jar</systemPath>
+				<!-- <scope>system</scope> <systemPath>/home/sivas/dev/3rd-party-artefacts/tools-1.7.0.13.jar</systemPath> -->
 			</dependency>
 
 
@@ -71,6 +71,11 @@
 			</dependency>
 
 			<!-- logging -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-api</artifactId>
@@ -125,11 +130,11 @@
 				<version>${hibernate.core.version}</version>
 			</dependency>
 
-			<dependency>
+<!-- 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-annotations</artifactId>
 				<version>${hibernate.annotations.version}</version>
-			</dependency>
+			</dependency> -->
 
 			<dependency>
 				<groupId>org.springframework</groupId>

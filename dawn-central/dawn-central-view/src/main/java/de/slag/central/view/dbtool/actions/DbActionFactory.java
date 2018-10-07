@@ -26,8 +26,9 @@ public class DbActionFactory {
 				try {
 					dbActionResult = dbActionFunction.get();
 				} catch (Throwable t) {
-					LOG.error(t);
+					LOG.error("error on '" + description + "'", t);
 					errors = true;
+					return;
 				}
 				done = true;
 				errors = dbActionResult.isErrors();
