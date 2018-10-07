@@ -6,12 +6,12 @@ import java.util.function.Supplier;
 import org.springframework.stereotype.Repository;
 
 import de.slag.central.data.adm.UserDao;
-import de.slag.central.data.impl.AbstractDao;
-import de.slag.central.data.impl.Identification;
+import de.slag.central.data.impl.AbstractApplicationBeanDao;
+import de.slag.central.data.model.Identification;
 import de.slag.central.model.adm.User;
 
 @Repository
-public class UserDaoImpl extends AbstractDao<Identification, User> implements UserDao {
+public class UserDaoImpl extends AbstractApplicationBeanDao<Identification, User> implements UserDao {
 
 	@Override
 	protected Class<Identification> getBeanClass() {

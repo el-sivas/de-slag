@@ -1,8 +1,6 @@
 package de.slag.base.tools;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -12,27 +10,12 @@ import de.slag.base.BaseException;
 
 public class FieldMappingUtils {
 
-	public static void setField(Object obj, String fieldname, Object value) {
-		final Collection<Field> collectFields = collectFields(obj);
-		for (Field field : collectFields) {
-			if (fieldname.equals(field.getName())) {
-				field.setAccessible(true);
-				try {
-					field.set(obj, value);
-				} catch (IllegalArgumentException | IllegalAccessException e) {
-					throw new BaseException(e);
-				}
-				field.setAccessible(false);
-			}
-		}
-	}
-
 	public static void map(Object from, Object to, Collection<String> skipFields, boolean tolerant) {
-		final Collection<Field> fields = collectFields(from);
+		final Collection<Field> fields = ReflectionUtils.collectFields(from.getClass());
 		final List<Field> relevantFields = fields.stream().filter(f -> !skipFields.contains(f.getName()))
 				.collect(Collectors.toList());
 
-		final Collection<Field> targetFields = collectFields(to);
+		final Collection<Field> targetFields = ReflectionUtils.collectFields(to.getClass());
 		for (final Field sourceField : relevantFields) {
 			final String sourceFieldName = sourceField.getName();
 			final Optional<Field> target = targetFields.stream().filter(f -> sourceFieldName.equals(f.getName()))
@@ -67,21 +50,5 @@ public class FieldMappingUtils {
 			targetField.setAccessible(false);
 		}
 
-	}
-
-	private static Collection<Field> collectFields(Object o) {
-		return collectFields(o.getClass());
-	}
-
-	private static Collection<Field> collectFields(Class<?> clazz) {
-		final Class<?> superclass = clazz.getSuperclass();
-		final Collection<Field> fields = new ArrayList<>();
-		if (superclass != null) {
-			fields.addAll(collectFields(superclass));
-		}
-
-		final List<Field> fieldsOfThisClass = Arrays.asList(clazz.getDeclaredFields());
-		fields.addAll(fieldsOfThisClass);
-		return fields;
 	}
 }

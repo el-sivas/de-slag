@@ -1,19 +1,16 @@
 package de.slag.central.model;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
-import de.slag.base.tools.DateUtils;
+import de.slag.central.DawnConstants;
 
 public abstract class ApplicationBean {
-
-	private static final Date END_OF_DEKAMILLENIAL = DateUtils.toDate(LocalDateTime.of(9999, 12, 31, 23, 59, 59));
 
 	private Long id;
 
 	private Date createdAt = new Date();
 
-	private Date validUntil = END_OF_DEKAMILLENIAL;
+	private Date validUntil = DawnConstants.END_OF_DEKAMILLENIAL;
 
 	public Long getId() {
 		return id;

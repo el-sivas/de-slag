@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import de.slag.central.DawnConstants;
+
 @MappedSuperclass
 public abstract class PersistBean {
 
@@ -16,24 +18,15 @@ public abstract class PersistBean {
 	private Long id;
 
 	@Column
-	private Date validUntil;
+	private Date validUntil = DawnConstants.END_OF_DEKAMILLENIAL;
 
 	@Column
-	private Date createdAt;
-	
+	private Date createdAt = new Date();
+
 	@Column
 	private Date lastUpdate;
 
 	public Long getId() {
 		return id;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
 }

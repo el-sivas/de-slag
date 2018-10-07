@@ -3,11 +3,14 @@ package de.slag.central.data.database;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.model.naming.Identifier;
+import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
 
 import de.slag.base.tools.ClassUtils;
 import de.slag.central.data.impl.PersistBean;
@@ -70,6 +73,7 @@ public class DawnHibernateSupport {
 			String dialect) {
 		
 		final Configuration configuration = new Configuration();
+		
 		configuration.setProperty("hibernate.connection.driver_class", driverClass);
 		configuration.setProperty("hibernate.connection.url", url);
 		configuration.setProperty("hibernate.connection.username", username);
@@ -77,9 +81,10 @@ public class DawnHibernateSupport {
 		configuration.setProperty("hibernate.dialect", dialect);
 		configuration.setProperty("hibernate.show_sql", "true");
 		configuration.setProperty("hibernate.connection.pool_size", "10");
+		configuration.setPhysicalNamingStrategy(new DawnPhysicalNamingStrategy());
 		return configuration;
 	}
-
+	
 	private static SessionFactory createSessionFactory(final Configuration configuration) {
 		return configuration.buildSessionFactory(
 				new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build());

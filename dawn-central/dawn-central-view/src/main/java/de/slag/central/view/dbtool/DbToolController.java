@@ -10,18 +10,16 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.annotation.Resource;
 
-import org.apache.jena.iri.impl.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Controller;
 
 import de.slag.base.tools.LoggingUtils;
 import de.slag.base.tools.SystemUtils;
 import de.slag.central.DawnApplicationContext;
+import de.slag.central.service.adm.DbInfoService;
 import de.slag.central.view.controller.DawnController;
-import de.slag.central.view.controller.dev.DevController;
 import de.slag.central.view.dbtool.actions.DbAction;
 import de.slag.central.view.dbtool.actions.DbActionFactory;
 import de.slag.central.view.dbtool.actions.DbActionResult;
@@ -30,6 +28,9 @@ import de.slag.central.view.dbtool.structure.DbUpdateService;
 
 @Controller
 public class DbToolController implements DawnController {
+
+	@Resource
+	private DbInfoService dbInfoService;
 
 	private Map<Long, String> info = new HashMap<>();
 
@@ -113,6 +114,9 @@ public class DbToolController implements DawnController {
 	}
 
 	public void startAll() {
-		dbActions.forEach(a -> a.run());
+		for (DbAction dbAction : dbActions) {
+			dbAction.run();
+			dbInfoService.saveInfo("executed: " + dbAction.getLabel());
+		}
 	}
 }

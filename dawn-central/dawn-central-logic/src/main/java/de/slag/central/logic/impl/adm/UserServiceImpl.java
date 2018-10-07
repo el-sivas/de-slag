@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import de.slag.central.DawnApplicationContext;
 import de.slag.central.data.ApplicationBeanDao;
 import de.slag.central.data.adm.UserDao;
 import de.slag.central.logic.impl.AbstractApplicationBeanService;

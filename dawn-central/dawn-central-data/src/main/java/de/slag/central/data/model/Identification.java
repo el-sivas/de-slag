@@ -1,8 +1,10 @@
-package de.slag.central.data.impl;
+package de.slag.central.data.model;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
+import de.slag.central.data.impl.PersistBean;
 
 @Entity
 public class Identification extends PersistBean {
