@@ -41,7 +41,8 @@
 				<groupId>com.sun</groupId>
 				<artifactId>tools</artifactId>
 				<version>${com.sun.tools.version}</version>
-				<!-- <scope>system</scope> <systemPath>/home/sivas/dev/3rd-party-artefacts/tools-1.7.0.13.jar</systemPath> -->
+				<scope>system</scope>
+				<systemPath>/home/sivas/dev/3rd-party-artefacts/tools-1.7.0.13.jar</systemPath>
 			</dependency>
 
 
@@ -130,11 +131,8 @@
 				<version>${hibernate.core.version}</version>
 			</dependency>
 
-<!-- 			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-annotations</artifactId>
-				<version>${hibernate.annotations.version}</version>
-			</dependency> -->
+			<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-annotations</artifactId> 
+				<version>${hibernate.annotations.version}</version> </dependency> -->
 
 			<dependency>
 				<groupId>org.springframework</groupId>
