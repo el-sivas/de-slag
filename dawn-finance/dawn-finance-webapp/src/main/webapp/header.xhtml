@@ -20,7 +20,11 @@
 		<h:outputText value=" | " />
 		<h:link value="Stock Exchange Values" outcome="se-value" />
 		<h:outputText value=" | " />
-		<h:link value="Administraion" outcome="administration" />
+		<h:link value="Administration" outcome="administration" />
+		<h:outputText value=" | " />
+		<p:commandLink id="reset" action="#{pc.reset}" ajax="false">
+			<h:outputText value="reset" />
+		</p:commandLink>
 
 		<c:if test="#{pc.messageOccured}">
 			<hr />

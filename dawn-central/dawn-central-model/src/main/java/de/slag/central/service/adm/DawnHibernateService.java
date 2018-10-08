@@ -1,4 +1,4 @@
-package de.slag.central;
+package de.slag.central.service.adm;
 
 public interface DawnHibernateService {
 

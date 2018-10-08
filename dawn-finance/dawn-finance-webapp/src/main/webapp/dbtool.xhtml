@@ -28,8 +28,11 @@
 					<h:outputText value="#{dbAction.done}" />
 				</p:column>
 				<p:column headerText="errors" style="width:144px;">
-					<h:outputText value="#{dbAction.errors}" />
+					<h:outputText id="with-errors" value="#{dbAction.errors}" />
+					<p:tooltip id="errorToolTip" for="with-errors"
+						value="#{dbAction.errorText}" position="top" />
 				</p:column>
+
 				<p:column style="width:24px;">
 					<p:commandLink id="run" action="#{dbAction.run}" ajax="false">
 						<h:outputText value="run" />

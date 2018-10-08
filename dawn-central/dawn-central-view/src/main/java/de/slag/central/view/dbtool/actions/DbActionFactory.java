@@ -3,6 +3,7 @@ package de.slag.central.view.dbtool.actions;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -17,6 +18,8 @@ public class DbActionFactory {
 
 			private Boolean errors;
 
+			private Throwable throwable;
+
 			@Override
 			public void run() {
 				if (isDone()) {
@@ -26,6 +29,7 @@ public class DbActionFactory {
 				try {
 					dbActionResult = dbActionFunction.get();
 				} catch (Throwable t) {
+					throwable = t;
 					LOG.error("error on '" + description + "'", t);
 					errors = true;
 					return;
@@ -47,6 +51,11 @@ public class DbActionFactory {
 			@Override
 			public String getLabel() {
 				return description;
+			}
+
+			@Override
+			public String getErrorText() {
+				return throwable == null ? StringUtils.EMPTY : throwable.toString();
 			}
 		};
 	}

@@ -1,5 +1,7 @@
 package de.slag.central.model.adm;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.BooleanUtils;
 
 import de.slag.base.tools.HashUtils;
@@ -14,6 +16,10 @@ public class User extends ApplicationBean implements Labelable {
 	private String passwordHash;
 
 	private Boolean active;
+	
+	private Date lastLogin;
+	
+	private int failedLogins;
 
 	public String getUsername() {
 		return username;
@@ -54,6 +60,22 @@ public class User extends ApplicationBean implements Labelable {
 	@Override
 	public String getLabel() {
 		return username;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public int getFailedLogins() {
+		return failedLogins;
+	}
+
+	public void setFailedLogins(int failedLogins) {
+		this.failedLogins = failedLogins;
 	}
 
 }

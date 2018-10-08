@@ -46,4 +46,6 @@ public class DawnApplicationContext {
 	public static Collection<Class<?>> getRegisteredClasses() {
 		return new ArrayList<>(registeredClasses);
 	}
+	
+	
 }

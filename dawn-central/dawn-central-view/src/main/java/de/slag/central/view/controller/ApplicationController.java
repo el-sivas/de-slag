@@ -57,7 +57,15 @@ public abstract class ApplicationController implements DawnController {
 
 	public String logOut() {
 		sessionContext.setCurrentUser(null);
+		
+		// das hier hilft leider nix
 		return "index.html";
+	}
+
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

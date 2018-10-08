@@ -42,7 +42,7 @@ public class DbToolController implements DawnController {
 	public void init() {
 		LoggingUtils.activateLogging();
 		addDbActions();
-	}
+	}	
 
 	public void addDbActions() {
 		dbActions.add(DbActionFactory.create(new Supplier<DbActionResult>() {
@@ -121,4 +121,6 @@ public class DbToolController implements DawnController {
 			dbInfoService.saveInfo("executed: " + dbAction.getLabel());
 		}
 	}
+
+
 }

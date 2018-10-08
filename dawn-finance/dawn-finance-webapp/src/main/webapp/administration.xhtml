@@ -17,15 +17,10 @@
 
 		<ui:include src="header.xhtml" />
 
-		<p:fieldset legend="Users" toggleable="true" toggleSpeed="100"
-			collapsed="true">
-			<p:dataTable var="user" value="#{pc.allUsers}">
-				<p:column headerText="Description">
-					<h:outputText value="#{user.label}" />
-				</p:column>
+		<ui:include src="adm-users.xhtml" />
+		
+		<ui:include src="adm-system.xhtml" />
 
-			</p:dataTable>
-		</p:fieldset>
 	</h:form>
 </h:body>
 </html>

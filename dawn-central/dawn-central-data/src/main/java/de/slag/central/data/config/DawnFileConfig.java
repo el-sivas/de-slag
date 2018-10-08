@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.slag.base.BaseException;
 import de.slag.central.data.impl.DataException;
 
 /**
@@ -69,6 +70,10 @@ public class DawnFileConfig implements DawnConfig {
 
 	private static DawnConfig instantiating(final String configFileName) {
 		Objects.requireNonNull(configFileName, "config file not set");
+
+		if (!new File(configFileName).exists()) {
+			throw new BaseException("no config file found at: '" + configFileName + "'");
+		}
 
 		final Properties properties = new Properties();
 		try (final FileInputStream fis = new FileInputStream(configFileName)) {

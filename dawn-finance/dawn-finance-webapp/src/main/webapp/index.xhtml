@@ -14,8 +14,7 @@
 	<h:form>
 		<c:set var="pc" value="#{cis.get('loginController')}" />
 
-		<h:outputText value="SLAG Invest"
-			style="font-size:300%" />
+		<h:outputText value="SLAG Invest" style="font-size:300%" />
 
 
 		<p:fieldset style="margin-bottom:6px;;margin-top:48px;width:10%">
@@ -35,15 +34,15 @@
 				<div>
 					<h:outputText value="password" />
 				</div>
-
-
-
 			</div>
 			<p:commandButton value="LOGIN" id="btn_login" action="#{pc.login}"
 				ajax="false" />
 		</p:fieldset>
-
 		<div>
+			<h:outputText value="#{pc.msg}" />
+		</div>
+
+		<div style="margin-top: 6px">
 			<h:link value="DB-Tool" outcome="dbtool" />
 		</div>
 	</h:form>

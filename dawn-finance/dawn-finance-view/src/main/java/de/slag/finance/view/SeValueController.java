@@ -27,6 +27,13 @@ public class SeValueController extends ApplicationBeanController<SEValue> {
 	private String isin;
 
 	private String name;
+	
+	@Override
+	public void reset() {
+		super.reset();
+		setValue(null);
+		loadAll();
+	}
 
 	@Override
 	public SEValue create() {
@@ -69,11 +76,7 @@ public class SeValueController extends ApplicationBeanController<SEValue> {
 		return isin;
 	}
 	
-	@Override
-	public void reset() {
-		super.reset();
-		loadAll();
-	}
+	
 
 	public void setIsin(String isin) {
 		this.isin = isin;

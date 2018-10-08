@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import de.slag.central.DawnHibernateService;
+import de.slag.central.service.adm.DawnHibernateService;
 
 @Service
 public class DbUpdateServiceImpl implements DbUpdateService {

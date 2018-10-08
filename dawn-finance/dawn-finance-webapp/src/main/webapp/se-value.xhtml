@@ -35,9 +35,6 @@
 		<div>
 			<p:commandButton value="CREATE" id="btn_create" action="#{pc.create}"
 				ajax="false" />
-
-			<p:commandButton value="LOAD ALL" id="btn_load_all"
-				action="#{pc.loadAll}" ajax="false" />
 		</div>
 
 		<c:if test="#{pc.value != null}">
@@ -45,7 +42,7 @@
 			<p:fieldset legend="#{value.label}"
 				style="margin-bottom:6px;margin-top:6px">
 
-				<h:panelGrid columns="3">
+				<h:panelGrid columns="2">
 					<h:outputText value="Name: #{value.name}" style="margin-right:12px" />
 					<h:outputText value="ISIN: #{value.isin}" />
 				</h:panelGrid>

@@ -10,4 +10,6 @@ public interface DbAction extends Labelable {
 
 	void run();
 
+	String getErrorText();
+
 }

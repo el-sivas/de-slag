@@ -4,14 +4,14 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
-import de.slag.base.tools.SleepUtils;
 import de.slag.central.model.adm.User;
 import de.slag.central.service.adm.UserService;
 import de.slag.central.view.SessionContext;
-import de.slag.central.view.ViewException;
 
 @Controller
 public class LoginController implements DawnController {
+
+	private static final long serialVersionUID = 1L;
 
 	private static final String START_PAGE = "start.xhtml";
 
@@ -21,6 +21,8 @@ public class LoginController implements DawnController {
 	@Resource
 	private UserService userService;
 
+	private String msg;
+
 	private String username;
 
 	private String password;
@@ -28,11 +30,20 @@ public class LoginController implements DawnController {
 	public String login() {
 		final User user = userService.loadByUsername(username);
 		if (user == null) {
-			throw new ViewException("user not found", username);
+			msg = "user not found: " + username;
+			return null;
+		}
+		if (!user.isActive()) {
+			userService.incrementFailedLogins(user);
+			msg = "user not active: " + username;
+			return null;
 		}
 		if (!user.isPasswordCorrect(password)) {
-			throw new ViewException("password incorrect", user);
+			userService.incrementFailedLogins(user);
+			msg = "password incorrect, user: " + username;
+			return null;
 		}
+		userService.setLastLogin(user);
 		sessionContext.setCurrentUser(user);
 
 		return START_PAGE;
@@ -52,5 +63,11 @@ public class LoginController implements DawnController {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getMsg() {
+		final String msg = this.msg;
+		this.msg = null;
+		return msg;
 	}
 }

@@ -2,8 +2,8 @@ package de.slag.central.data.database;
 
 import org.springframework.stereotype.Service;
 
-import de.slag.central.DawnHibernateService;
 import de.slag.central.data.config.DawnFileConfig;
+import de.slag.central.service.adm.DawnHibernateService;
 
 @Service
 public class DawnHibernateServiceImpl implements DawnHibernateService {

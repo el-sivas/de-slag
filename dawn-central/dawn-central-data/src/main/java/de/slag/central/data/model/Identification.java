@@ -1,5 +1,7 @@
 package de.slag.central.data.model;
 
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,12 @@ public class Identification extends PersistBean {
 
 	@Basic
 	private Boolean active;
+	
+	@Column
+	private Date lastLogin;
+	
+	@Basic
+	private Integer failedLogins;
 
 	public String getIdentifier() {
 		return identifier;

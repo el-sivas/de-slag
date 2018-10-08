@@ -2,20 +2,44 @@ package de.slag.base.tools;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import de.slag.base.BaseException;
 
 public class FieldMappingUtils {
 
-	public static void map(Object from, Object to, Collection<String> skipFields, boolean tolerant) {
-		final Collection<Field> fields = ReflectionUtils.collectFields(from.getClass());
+	private static final Log LOG = LogFactory.getLog(FieldMappingUtils.class);
+
+	private static final Map<Class<?>, Class<?>> COMPATIBLES = new HashMap<>();
+
+	static {
+		COMPATIBLES.put(byte.class, Byte.class);
+		COMPATIBLES.put(short.class, Short.class);
+		COMPATIBLES.put(int.class, Integer.class);
+		COMPATIBLES.put(long.class, Long.class);
+
+		COMPATIBLES.put(char.class, Character.class);
+
+		COMPATIBLES.put(float.class, Float.class);
+		COMPATIBLES.put(double.class, Double.class);
+
+		COMPATIBLES.put(boolean.class, Boolean.class);
+
+	}
+
+	public static void map(Object sourceObject, Object targetObject, Collection<String> skipFields, boolean tolerant) {
+		final Collection<Field> fields = ReflectionUtils.collectFields(sourceObject.getClass());
 		final List<Field> relevantFields = fields.stream().filter(f -> !skipFields.contains(f.getName()))
 				.collect(Collectors.toList());
 
-		final Collection<Field> targetFields = ReflectionUtils.collectFields(to.getClass());
+		final Collection<Field> targetFields = ReflectionUtils.collectFields(targetObject.getClass());
 		for (final Field sourceField : relevantFields) {
 			final String sourceFieldName = sourceField.getName();
 			final Optional<Field> target = targetFields.stream().filter(f -> sourceFieldName.equals(f.getName()))
@@ -27,28 +51,69 @@ public class FieldMappingUtils {
 				continue;
 			}
 			final Field targetField = target.get();
-			final Class<?> type = sourceField.getType();
-			final Class<?> type2 = targetField.getType();
-			if (!type.equals(type2)) {
-				throw new BaseException("types not compatible");
-			}
-			sourceField.setAccessible(true);
-			Object fieldValue;
-			try {
-				fieldValue = sourceField.get(from);
-			} catch (IllegalArgumentException | IllegalAccessException e) {
-				throw new BaseException(e);
-			}
-			sourceField.setAccessible(false);
+			final Class<?> sourceFieldType = sourceField.getType();
 
-			targetField.setAccessible(true);
-			try {
-				targetField.set(to, fieldValue);
-			} catch (IllegalArgumentException | IllegalAccessException e) {
-				throw new BaseException(e);
+			final Object fieldValue = getValue(sourceObject, sourceField);
+
+			final Class<?> targetFieldType = targetField.getType();
+			if (!sourceFieldType.equals(targetFieldType)) {
+				if (!isCompatible(sourceFieldType, targetFieldType, fieldValue)) {
+					if (!tolerant) {
+						throw new BaseException("types not compatible: " + sourceFieldType + ", " + targetFieldType
+								+ ", with value: " + fieldValue);
+					}
+					continue;
+				}
 			}
-			targetField.setAccessible(false);
+
+			setValue(targetObject, targetField, fieldValue);
 		}
 
+	}
+
+	private static void setValue(final Object targetObject, final Field targetField, final Object fieldValue) {
+		targetField.setAccessible(true);
+		try {
+			targetField.set(targetObject, fieldValue);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new BaseException(e);
+		} finally {
+			targetField.setAccessible(false);
+		}
+	}
+
+	private static Object getValue(final Object sourceObject, final Field sourceField) {
+		sourceField.setAccessible(true);
+		try {
+			return sourceField.get(sourceObject);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new BaseException(e);
+		} finally {
+			sourceField.setAccessible(false);
+		}
+	}
+
+	private static boolean isCompatible(final Class<?> sourceType, final Class<?> targetType, final Object fieldValue) {
+		for (Class<?> primitiveType : COMPATIBLES.keySet()) {
+			final Class<?> complexType = COMPATIBLES.get(primitiveType);
+
+			// primitive is never NULL, so it can be written in all cases.
+			if (primitiveType.equals(sourceType) && complexType.equals(targetType)) {
+				LOG.info("'" + sourceType + "' > '" + targetType + "': OK");
+				return true;
+			}
+
+			// complex can be NULl, primitive must not! It only can be written when value is
+			// not NULL.
+			if (complexType.equals(sourceType) && primitiveType.equals(targetType)) {
+				if (fieldValue != null) {
+					LOG.info("'" + sourceType + "' > '" + targetType + "', value: '" + fieldValue + "': OK");
+					return true;
+				}
+			}
+
+		}
+		LOG.warn("'"+sourceType + "' > '" + targetType + "', value: '" + fieldValue + "': not OK!");
+		return false;
 	}
 }

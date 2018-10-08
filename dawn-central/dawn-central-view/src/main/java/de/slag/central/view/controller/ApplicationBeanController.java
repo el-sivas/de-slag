@@ -26,10 +26,6 @@ public abstract class ApplicationBeanController<AB extends ApplicationBean> exte
 		reset();
 	}
 
-	public void reset() {
-		// implement if needet
-	}
-
 	public AB getValue() {
 		return value;
 	}
