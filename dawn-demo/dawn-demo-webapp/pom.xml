@@ -23,17 +23,6 @@
 		</resources>
 	</build>
 	<dependencies>
-		<dependency>
-			<groupId>de.slag.demo</groupId>
-			<artifactId>dawn-demo-view</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>de.slag.demo</groupId>
-			<artifactId>dawn-demo-logic</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>com.sun.faces</groupId>
