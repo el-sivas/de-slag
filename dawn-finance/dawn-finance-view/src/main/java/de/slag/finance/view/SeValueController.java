@@ -27,7 +27,7 @@ public class SeValueController extends ApplicationBeanController<SeValue> {
 	private String isin;
 
 	private String name;
-	
+
 	@Override
 	public void reset() {
 		super.reset();
@@ -75,8 +75,6 @@ public class SeValueController extends ApplicationBeanController<SeValue> {
 	public String getIsin() {
 		return isin;
 	}
-	
-	
 
 	public void setIsin(String isin) {
 		this.isin = isin;

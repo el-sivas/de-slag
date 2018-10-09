@@ -22,5 +22,9 @@
 			<groupId>de.slag.central</groupId>
 			<artifactId>dawn-central-view</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+		</dependency>
 	</dependencies>
 </project>
