@@ -3,7 +3,7 @@ package de.slag.finance.model;
 import de.slag.central.model.ApplicationBean;
 import de.slag.central.model.Labelable;
 
-public class SEValue extends ApplicationBean implements Labelable {
+public class SeValue extends ApplicationBean implements Labelable {
 
 	private String isin;
 

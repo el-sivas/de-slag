@@ -8,7 +8,7 @@ import de.slag.central.data.impl.PersistBean;
 
 @Entity
 @Table(name = "se_value")
-public class PersistSEValue extends PersistBean {
+public class PersistSeValue extends PersistBean {
 
 	@Column
 	private String isin;
