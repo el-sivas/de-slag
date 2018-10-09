@@ -4,9 +4,9 @@ import java.util.Date;
 
 import javax.money.MonetaryAmount;
 
-public class StockExchangeValuePrice {
+public class SeValuePricePoint {
 
-	private SEValue stockExchangeValue;
+	private SeValue seValue;
 
 	private MonetaryAmount price;
 

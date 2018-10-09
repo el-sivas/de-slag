@@ -10,19 +10,19 @@ import org.springframework.stereotype.Controller;
 
 import de.slag.central.service.ApplicationBeanService;
 import de.slag.central.view.controller.ApplicationBeanController;
-import de.slag.finance.model.SEValue;
+import de.slag.finance.model.SeValue;
 import de.slag.finance.service.IsinValidator;
-import de.slag.finance.service.SEValueService;
+import de.slag.finance.service.SeValueService;
 
 @Controller
-public class SeValueController extends ApplicationBeanController<SEValue> {
+public class SeValueController extends ApplicationBeanController<SeValue> {
 
 	private static final long serialVersionUID = 1L;
 
 	@Resource
-	private SEValueService sEValueService;
+	private SeValueService sEValueService;
 
-	private Collection<SEValue> seValues = new ArrayList<>();
+	private Collection<SeValue> seValues = new ArrayList<>();
 
 	private String isin;
 
@@ -36,7 +36,7 @@ public class SeValueController extends ApplicationBeanController<SEValue> {
 	}
 
 	@Override
-	public SEValue create() {
+	public SeValue create() {
 		if (!new IsinValidator().test(isin)) {
 			addInfo("isin is not valid: '" + isin + "'");
 			return null;
@@ -46,7 +46,7 @@ public class SeValueController extends ApplicationBeanController<SEValue> {
 			return null;
 		}
 
-		final SEValue bean = super.create();
+		final SeValue bean = super.create();
 		bean.setIsin(isin);
 		bean.setName(name);
 		save(bean);
@@ -64,11 +64,11 @@ public class SeValueController extends ApplicationBeanController<SEValue> {
 	}
 
 	@Override
-	protected ApplicationBeanService<SEValue> getApplicationBeanService() {
+	protected ApplicationBeanService<SeValue> getApplicationBeanService() {
 		return sEValueService;
 	}
 
-	public Collection<SEValue> getSeValues() {
+	public Collection<SeValue> getSeValues() {
 		return seValues;
 	}
 
