@@ -18,7 +18,7 @@
 |xDaoImpl     |Implementation of a non database related Dao. x stands for type (i.e. Web, File) 
 |Holder     |DataBean for transient data holding, not a facade.
 |Utils     |Helper, only static access, no use of other logic components except Utils
-|Support     |God class, for lazy hours. Prevent this, refactor this, just dont do this.
+|~~Support~~     |God class, for lazy hours. Prevent this, refactor this, just dont do this.
 
 ## Methods
 
@@ -37,4 +37,4 @@ DB - DataBean
 |.validate    |void    |PB    |Checks something and throws Exception if not valid
 |.isAvalid    |boolean    |PB    |Checks something and returns true if valid.
 |...all    |void, Collection<T>    |PB    |does things to multiple objects
-|.check    |(whatever)    |(wherever)    |Checks something, you will not understand what or how until you read the methods code.
+|~~.check~~    |(whatever)    |(wherever)    |Checks something, you will not understand what or how until you read the methods.  code. Don't do this.
