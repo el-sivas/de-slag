@@ -5,7 +5,7 @@
 
 |Pattern|Description|
 |:------|:----------|
-|DataBean     |A bean that contains business data.
+|*DataBean*     |*An abstract super pattern of business data containing classes. Don't use this, see more specific DataBean definitions below.*
 |Controller     |Bean that services UI
 |ApplicationBean     |DataBean, member of Application Data Model
 |ApplicationBeanService     |Service to handle ApplicationBeans of one type
