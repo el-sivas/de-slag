@@ -37,4 +37,4 @@ DB - DataBean
 |.validate    |void    |PB    |Checks something and throws Exception if not valid
 |.isAvalid    |boolean    |PB    |Checks something and returns true if valid.
 |...all    |void, Collection<T>    |PB    |does things to multiple objects
-|~~.check~~    |(whatever)    |(wherever)    |Checks something, you will not understand what or how until you read the methods.  code. Don't do this.
+|~~.check~~    |(whatever)    |(wherever)    |Checks something, you will not understand what or how until you read the methods  code. Don't do this.
