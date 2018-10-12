@@ -21,7 +21,7 @@ import org.apache.commons.logging.LogFactory;
 
 import de.slag.base.tools.CliOptionsUtils;
 import de.slag.base.tools.CsvUtils;
-import de.slag.base.tools.ReflectionUtils;
+import de.slag.base.tools.reflection.ReflectionUtils;
 
 public class DataImportApp {
 

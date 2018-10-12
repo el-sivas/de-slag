@@ -1,6 +1,6 @@
 package de.slag.central.view;
 
-import de.slag.central.model.Labelable;
+import de.slag.base.Labelable;
 
 public class ViewException extends RuntimeException {
 

@@ -16,26 +16,38 @@
 		<c:set var="pc" value="#{cis.get('seValueController')}" />
 		<ui:include src="header.xhtml" />
 
-		<div>
+		<p:fieldset legend="Create" toggleable="true" toggleSpeed="100"
+			id="fs-create" collapsed="true">
 			<div>
-				<p:inputText value="#{pc.isin}" />
+				<div>
+					<p:inputText value="#{pc.isin}" />
+				</div>
+				<div>
+					<h:outputText value="ISIN" />
+				</div>
 			</div>
 			<div>
-				<h:outputText value="ISIN" />
+				<div>
+					<p:inputText value="#{pc.name}" />
+				</div>
+				<div>
+					<h:outputText value="NAME" />
+				</div>
 			</div>
-		</div>
-		<div>
+
 			<div>
-				<p:inputText value="#{pc.name}" />
+				<div>
+					<p:selectBooleanCheckbox value="#{pc.testdaten}" />
+				</div>
+				<div>
+					<h:outputText value="TESTDATEN" />
+				</div>
 			</div>
 			<div>
-				<h:outputText value="NAME" />
+				<p:commandButton value="CREATE" id="btn_create"
+					action="#{pc.create}" ajax="false" />
 			</div>
-		</div>
-		<div>
-			<p:commandButton value="CREATE" id="btn_create" action="#{pc.create}"
-				ajax="false" />
-		</div>
+		</p:fieldset>
 
 		<c:if test="#{pc.value != null}">
 			<c:set var="value" value="#{pc.value}" />
@@ -66,6 +78,10 @@
 				</p:column>
 				<p:column headerText="Name">
 					<h:outputText value="#{sev.name}" />
+				</p:column>
+				<p:column headerText="Testdaten"
+					style="width:96px;text-align:center">
+					<h:outputText value="#{sev.testdaten}" />
 				</p:column>
 				<p:column style="width:12px;text-align:center">
 					<p:commandLink id="remove" action="#{pc.delete(sev.id)}"

@@ -1,5 +1,6 @@
 package de.slag.finance.data.impl;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,5 +16,8 @@ public class PersistSeValue extends PersistBean {
 
 	@Column
 	private String name;
+	
+	@Basic
+	private Boolean testdaten;
 
 }

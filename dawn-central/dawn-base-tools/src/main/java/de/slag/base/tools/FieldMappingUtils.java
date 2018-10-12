@@ -12,6 +12,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.slag.base.BaseException;
+import de.slag.base.MessageCacheable;
+import de.slag.base.tools.reflection.ReflectionUtils;
+import de.slag.base.MessageCache;
 
 public class FieldMappingUtils {
 
@@ -31,7 +34,6 @@ public class FieldMappingUtils {
 		COMPATIBLES.put(double.class, Double.class);
 
 		COMPATIBLES.put(boolean.class, Boolean.class);
-
 	}
 
 	public static void map(Object sourceObject, Object targetObject, Collection<String> skipFields, boolean tolerant) {
@@ -57,7 +59,14 @@ public class FieldMappingUtils {
 
 			final Class<?> targetFieldType = targetField.getType();
 			if (!sourceFieldType.equals(targetFieldType)) {
-				if (!isCompatible(sourceFieldType, targetFieldType, fieldValue)) {
+				final MessageCacheable msgCache = MessageCache.creating();
+				msgCache.append("Field: '" + sourceFieldName + "'");
+				if (!isCompatible(sourceFieldType, targetFieldType, fieldValue, msgCache)) {
+					
+					
+					
+					
+					
 					if (!tolerant) {
 						throw new BaseException("types not compatible: " + sourceFieldType + ", " + targetFieldType
 								+ ", with value: " + fieldValue);
@@ -93,13 +102,16 @@ public class FieldMappingUtils {
 		}
 	}
 
-	private static boolean isCompatible(final Class<?> sourceType, final Class<?> targetType, final Object fieldValue) {
+	private static boolean isCompatible(final Class<?> sourceType, final Class<?> targetType, final Object fieldValue,
+			MessageCacheable msgCache) {
+
 		for (Class<?> primitiveType : COMPATIBLES.keySet()) {
 			final Class<?> complexType = COMPATIBLES.get(primitiveType);
 
 			// primitive is never NULL, so it can be written in all cases.
 			if (primitiveType.equals(sourceType) && complexType.equals(targetType)) {
-				LOG.info("'" + sourceType + "' > '" + targetType + "': OK");
+				msgCache.append("'" + sourceType + "' > '" + targetType + "': OK");
+				LOG.info(msgCache);
 				return true;
 			}
 
@@ -107,13 +119,17 @@ public class FieldMappingUtils {
 			// not NULL.
 			if (complexType.equals(sourceType) && primitiveType.equals(targetType)) {
 				if (fieldValue != null) {
-					LOG.info("'" + sourceType + "' > '" + targetType + "', value: '" + fieldValue + "': OK");
+					final String message = "'" + sourceType + "' > '" + targetType + "', value: '" + fieldValue
+							+ "': OK";
+					msgCache.append(message);
+					LOG.info(msgCache);
 					return true;
 				}
 			}
 
 		}
-		LOG.warn("'"+sourceType + "' > '" + targetType + "', value: '" + fieldValue + "': not OK!");
+		msgCache.append("'" + sourceType + "' > '" + targetType + "', value: '" + fieldValue + "': not OK!");
+		LOG.warn(msgCache);
 		return false;
 	}
 }

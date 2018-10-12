@@ -20,11 +20,11 @@
 		<h:outputText value=" | " />
 		<h:link value="Stock Exchange Values" outcome="se-value" />
 		<h:outputText value=" | " />
-		<h:link value="Administration" outcome="administration" />
+		<h:link value="Stock Exchange Value Prices" outcome="se-value-price" />
 		<h:outputText value=" | " />
-		<p:commandLink id="reset" action="#{pc.reset}" ajax="false">
-			<h:outputText value="reset" />
-		</p:commandLink>
+		<h:link value="Administration" outcome="administration" />
+
+		<c:if test="#{pc.loadLazyValuesExternal}" />
 
 		<c:if test="#{pc.messageOccured}">
 			<hr />

@@ -17,13 +17,11 @@ public abstract class ApplicationBeanController<AB extends ApplicationBean> exte
 
 	public void save(AB bean) {
 		getApplicationBeanService().save(bean);
-		reset();
 	}
 
 	public void delete(Long id) {
 		getApplicationBeanService().delete(id);
 		addInfo("deleted id: " + id);
-		reset();
 	}
 
 	public AB getValue() {
@@ -40,6 +38,5 @@ public abstract class ApplicationBeanController<AB extends ApplicationBean> exte
 	
 	public void close() {
 		setValue(null);
-		reset();
 	}
 }

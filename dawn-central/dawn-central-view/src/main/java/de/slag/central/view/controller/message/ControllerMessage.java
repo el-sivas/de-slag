@@ -1,6 +1,6 @@
 package de.slag.central.view.controller.message;
 
-import de.slag.central.model.Labelable;
+import de.slag.base.Labelable;
 
 public class ControllerMessage implements Labelable {
 	

@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import de.slag.base.tools.ReflectionUtils;
+import de.slag.base.tools.reflection.ReflectionUtils;
 
 public abstract class AbstractPersistBeanDao<PB extends PersistBean> extends AbstractDao {
 
@@ -44,7 +44,7 @@ public abstract class AbstractPersistBeanDao<PB extends PersistBean> extends Abs
 	}
 
 	public void save(PB bean) {
-		ReflectionUtils.setField(bean, "lastUpdate", new Date());
+		ReflectionUtils.set(bean, "lastUpdate", new Date());
 
 		if (bean.getId() != null) {
 			consumer(s -> s.update(bean));
@@ -62,7 +62,7 @@ public abstract class AbstractPersistBeanDao<PB extends PersistBean> extends Abs
 	}
 
 	public void delete(PB persistBean) {
-		ReflectionUtils.setField(persistBean, COL_VALID_UNTIL, new Date());
+		ReflectionUtils.set(persistBean, COL_VALID_UNTIL, new Date());
 		save(persistBean);
 	}
 

@@ -34,6 +34,16 @@ public abstract class ApplicationController implements DawnController {
 	private void addMessage(Severity severity, String text) {
 		messages.add(ControllerMessage.creating(severity, text));
 	}
+	
+	public final boolean isLoadLazyValuesExternal() {
+		reset();
+		loadLazyValues();
+		return true;
+	}
+	
+	protected void loadLazyValues() {
+		// implement if needet
+	}
 
 	public String getMessage() {
 		final StringBuilder sb = new StringBuilder();

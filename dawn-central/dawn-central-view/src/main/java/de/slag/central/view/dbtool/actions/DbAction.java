@@ -1,6 +1,6 @@
 package de.slag.central.view.dbtool.actions;
 
-import de.slag.central.model.Labelable;
+import de.slag.base.Labelable;
 
 public interface DbAction extends Labelable {
 

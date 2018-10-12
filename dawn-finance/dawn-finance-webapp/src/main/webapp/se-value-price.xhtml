@@ -13,68 +13,16 @@
 </h:head>
 <h:body>
 	<h:form>
-		<c:set var="pc" value="#{cis.get('seValueController')}" />
+		<c:set var="pc" value="#{cis.get('seValuePriceController')}" />
 		<ui:include src="header.xhtml" />
 
-		<div>
-			<div>
-				<p:inputText value="#{pc.isin}" />
-			</div>
-			<div>
-				<h:outputText value="ISIN" />
-			</div>
-		</div>
-		<div>
-			<div>
-				<p:inputText value="#{pc.name}" />
-			</div>
-			<div>
-				<h:outputText value="NAME" />
-			</div>
-		</div>
-		<div>
-			<p:commandButton value="CREATE" id="btn_create" action="#{pc.create}"
-				ajax="false" />
-		</div>
+		<p:dataTable var="sev" value="#{pc.points}" style="margin-top:6px">
+			<p:column headerText="Label">
+				<!-- 			style="width:12px;text-align:center" -->
+				<h:outputText value="#{point.label}" />
+			</p:column>
+		</p:dataTable>
 
-		<c:if test="#{pc.value != null}">
-			<c:set var="value" value="#{pc.value}" />
-			<p:fieldset legend="#{value.label}"
-				style="margin-bottom:6px;margin-top:6px">
-
-				<h:panelGrid columns="2">
-					<h:outputText value="Name: #{value.name}" style="margin-right:12px" />
-					<h:outputText value="ISIN: #{value.isin}" />
-				</h:panelGrid>
-				<hr />
-				<div>
-					<p:commandLink id="close" action="#{pc.close}" ajax="false">
-						<h:outputText value="close" />
-					</p:commandLink>
-				</div>
-			</p:fieldset>
-		</c:if>
-		<c:if test="#{pc.value == null}">
-			<p:dataTable var="sev" value="#{pc.seValues}" style="margin-top:6px">
-				<p:column style="width:12px;text-align:center">
-					<p:commandLink id="open" action="#{pc.open(sev.id)}" ajax="false">
-						<h:outputText value="+" />
-					</p:commandLink>
-				</p:column>
-				<p:column headerText="ISIN" style="width:144px">
-					<h:outputText value="#{sev.isin}" />
-				</p:column>
-				<p:column headerText="Name">
-					<h:outputText value="#{sev.name}" />
-				</p:column>
-				<p:column style="width:12px;text-align:center">
-					<p:commandLink id="remove" action="#{pc.delete(sev.id)}"
-						ajax="false">
-						<h:outputText value="X" />
-					</p:commandLink>
-				</p:column>
-			</p:dataTable>
-		</c:if>
 	</h:form>
 </h:body>
 </html>

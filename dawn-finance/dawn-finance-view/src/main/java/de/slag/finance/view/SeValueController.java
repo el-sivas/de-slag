@@ -27,11 +27,12 @@ public class SeValueController extends ApplicationBeanController<SeValue> {
 	private String isin;
 
 	private String name;
+	
+	private boolean testdaten;
 
 	@Override
 	public void reset() {
 		super.reset();
-		setValue(null);
 		loadAll();
 	}
 
@@ -49,10 +50,12 @@ public class SeValueController extends ApplicationBeanController<SeValue> {
 		final SeValue bean = super.create();
 		bean.setIsin(isin);
 		bean.setName(name);
+		bean.setTestdaten(testdaten);
 		save(bean);
 		addInfo("successfully created");
 		isin = null;
 		name = null;
+		testdaten = false;
 
 		return null;
 	}
@@ -86,5 +89,13 @@ public class SeValueController extends ApplicationBeanController<SeValue> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isTestdaten() {
+		return testdaten;
+	}
+
+	public void setTestdaten(boolean testdaten) {
+		this.testdaten = testdaten;
 	}
 }

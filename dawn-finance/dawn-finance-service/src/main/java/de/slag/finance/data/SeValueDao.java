@@ -6,5 +6,4 @@ import de.slag.finance.model.SeValue;
 public interface SeValueDao extends ApplicationBeanDao<SeValue> {
 	
 	
-	
 }

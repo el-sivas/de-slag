@@ -10,6 +10,7 @@ import de.slag.central.data.ApplicationBeanDao;
 import de.slag.central.logic.impl.AbstractApplicationBeanService;
 import de.slag.central.service.ApplicationBeanCredentials;
 import de.slag.finance.data.SeValueDao;
+import de.slag.finance.data.SeValuePricePointDao;
 import de.slag.finance.model.SeValue;
 import de.slag.finance.service.SeValueService;
 
@@ -18,7 +19,7 @@ public class SeValueServiceImpl extends AbstractApplicationBeanService<SeValue>
 		implements SeValueService {
 	
 	@Resource
-	private SeValueDao sEValueDao;
+	private SeValueDao seValueDao;
 
 	@Override
 	public SeValue create(Optional<ApplicationBeanCredentials<SeValue>> credentials) {
@@ -32,6 +33,6 @@ public class SeValueServiceImpl extends AbstractApplicationBeanService<SeValue>
 
 	@Override
 	protected ApplicationBeanDao<SeValue> getDao() {
-		return sEValueDao;
+		return seValueDao;
 	}
 }

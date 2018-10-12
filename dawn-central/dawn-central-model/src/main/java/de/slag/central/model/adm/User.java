@@ -4,10 +4,10 @@ import java.util.Date;
 
 import org.apache.commons.lang3.BooleanUtils;
 
+import de.slag.base.Labelable;
 import de.slag.base.tools.HashUtils;
 import de.slag.base.tools.HashUtils.Algorythm;
 import de.slag.central.model.ApplicationBean;
-import de.slag.central.model.Labelable;
 
 public class User extends ApplicationBean implements Labelable {
 

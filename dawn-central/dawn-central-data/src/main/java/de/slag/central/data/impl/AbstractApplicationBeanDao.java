@@ -5,11 +5,16 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import de.slag.base.tools.FieldMappingUtils;
+import de.slag.base.tools.mapping.FieldMapper;
+import de.slag.base.tools.reflection.PropertyGetter;
+import de.slag.base.tools.reflection.PropertySetter;
+import de.slag.base.tools.reflection.ReflectionUtils;
+import de.slag.central.data.FieldMapperSupport;
 import de.slag.central.model.ApplicationBean;
-import de.slag.central.model.adm.User;
 
 public abstract class AbstractApplicationBeanDao<PB extends PersistBean, AB extends ApplicationBean>
 		extends AbstractPersistBeanDao<PB> {
@@ -56,6 +61,29 @@ public abstract class AbstractApplicationBeanDao<PB extends PersistBean, AB exte
 		}
 		mapApplicationToPersist().accept(bean, persistBean);
 		save(persistBean);
+	}
+
+	das hier testen anstelle den FieldMappingUtils
+	private AB unpersist(PB persistBean, Supplier<AB> supplier) {
+		final AB ab = supplier.get();
+		final Collection<PropertyGetter> determineGetter = ReflectionUtils.determineGetter(persistBean);
+		final Collection<PropertySetter> determineSetter = ReflectionUtils.determineSetter(ab);
+
+		for (PropertySetter propertySetter : determineSetter) {
+			final String name = propertySetter.getName();
+			final PropertyGetter propertyGetter = determineGetter.stream()
+					.filter(s -> s.getName().equals(name))
+					.findFirst()
+					.get();
+			final FieldMapper<?> fieldMapper = getFieldMapper(propertyGetter.getType(), propertySetter.getType());
+			propertySetter.set(fieldMapper.equals(propertyGetter.get()));
+		}
+		return ab;
+
+	}
+
+	public FieldMapper<?> getFieldMapper(Class<?> from, Class<?> to) {
+		return FieldMapperSupport.instance().get(from, to);
 	}
 
 	public void delete(AB bean) {
