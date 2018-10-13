@@ -33,7 +33,10 @@ public class MonetaryAmount implements javax.money.MonetaryAmount {
 
 	@Override
 	public int compareTo(javax.money.MonetaryAmount o) {
-		Utils.assertEqualCurrency(o, this);
+		int compareTo = this.currencyUnit.compareTo(o.getCurrency());
+		if (compareTo != 0) {
+			return compareTo;
+		}
 		return this.numberValue.compareTo(o.getNumber());
 	}
 

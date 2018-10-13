@@ -1,4 +1,4 @@
-package de.slag.finance.service.impl.example;
+package de.slag.finance.service.impl;
 
 import java.util.Optional;
 
