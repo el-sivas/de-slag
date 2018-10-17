@@ -20,8 +20,7 @@ public class PersistDataTransferServiceImpl implements PersistDataTransferServic
 
 	@Override
 	public void transferData(ApplicationBean from, PersistBean to) {
-
-		transferDataInternal(to, to, Arrays.asList("id"));
+		transferDataInternal(from, to, Arrays.asList("id"));
 	}
 
 	private void transferDataInternal(Object from, Object to, Collection<String> excludedFields) {

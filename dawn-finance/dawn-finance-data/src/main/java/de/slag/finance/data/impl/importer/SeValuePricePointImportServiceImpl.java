@@ -24,12 +24,12 @@ import de.slag.finance.service.SeValueService;
 public class SeValuePricePointImportServiceImpl implements SeValuePricePointImportService {
 
 	@Resource
-	private FinImpSeValuePointDao finImpSeValuePointDao;
+	private ImpFinValuePointDao impFinValuePointDao;
 
 	@Resource
 	private SeValueService seValueService;
 
-	public SeValuePricePoint create(Supplier<SeValuePricePoint> s, FinImpSeValuePoint i) {
+	public SeValuePricePoint create(Supplier<SeValuePricePoint> s, ImpFinValuePoint i) {
 		final SeValuePricePoint persist = s.get();
 		persist.setPriceDate(i.getDate());
 
@@ -43,7 +43,7 @@ public class SeValuePricePointImportServiceImpl implements SeValuePricePointImpo
 
 	@Override
 	public Collection<SeValuePricePoint> importData(Collection<String> isins, Supplier<SeValuePricePoint> s) {
-		final Collection<FinImpSeValuePoint> findBy = findBy(isins);
+		final Collection<ImpFinValuePoint> findBy = findBy(isins);
 
 		Collection<SeValuePricePoint> persists = new ArrayList<>();
 
@@ -53,9 +53,9 @@ public class SeValuePricePointImportServiceImpl implements SeValuePricePointImpo
 
 	}
 
-	private Collection<FinImpSeValuePoint> findBy(Collection<String> isins) {
-		final Collection<FinImpSeValuePoint> allImports = finImpSeValuePointDao.findAll();
-		Stream<FinImpSeValuePoint> filter = allImports.stream().filter(i -> isins.contains(i.getIsin()));
+	private Collection<ImpFinValuePoint> findBy(Collection<String> isins) {
+		final Collection<ImpFinValuePoint> allImports = impFinValuePointDao.findAll();
+		Stream<ImpFinValuePoint> filter = allImports.stream().filter(i -> isins.contains(i.getIsin()));
 		return filter.collect(Collectors.toList());
 	}
 

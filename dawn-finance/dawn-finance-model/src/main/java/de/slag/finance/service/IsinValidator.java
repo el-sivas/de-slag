@@ -8,6 +8,10 @@ public class IsinValidator implements Predicate<String> {
 
 	private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
+	public static IsinValidator instance() {
+		return new IsinValidator();
+	}
+
 	@Override
 	public boolean test(String isinCandidate) {
 		if (StringUtils.isBlank(isinCandidate)) {

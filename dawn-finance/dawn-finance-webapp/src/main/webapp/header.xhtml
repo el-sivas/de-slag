@@ -15,7 +15,7 @@
 		<p:commandLink id="logout" action="#{pc.logOut}" ajax="false">
 			<h:outputText value="logout" />
 		</p:commandLink>
-		<h:outputText value=" | " />
+		<h:outputText value=" || " />
 		<h:link value="Start" outcome="start" />
 		<h:outputText value=" | " />
 		<h:link value="Stock Exchange Values" outcome="se-value" />
@@ -23,6 +23,11 @@
 		<h:link value="Stock Exchange Value Prices" outcome="se-value-price" />
 		<h:outputText value=" | " />
 		<h:link value="Administration" outcome="administration" />
+		<c:if test="#{cis.get('developmentController').developmentEnabled}">
+			<h:outputText value=" | " />
+			<h:link value="Developlment" outcome="development" />
+		</c:if>
+
 
 		<c:if test="#{pc.loadLazyValuesExternal}" />
 
@@ -33,6 +38,7 @@
 					style="margin-top:12px;font-family:monospace" escape="false" />
 			</div>
 		</c:if>
+
 		<hr />
 	</div>
 </h:body>
