@@ -1,5 +1,6 @@
 package de.slag.finance.service.impl;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.annotation.Resource;
@@ -34,5 +35,10 @@ public class SeValueServiceImpl extends AbstractApplicationBeanService<SeValue>
 	@Override
 	protected ApplicationBeanDao<SeValue> getDao() {
 		return seValueDao;
+	}
+
+	@Override
+	public Optional<SeValue> loadByIsin(String isin) {
+		return findAll().stream().filter(e -> isin.equals(e.getIsin())).findFirst();
 	}
 }

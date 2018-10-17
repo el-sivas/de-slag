@@ -35,4 +35,10 @@ public class SeValuePricePointServiceImpl extends AbstractApplicationBeanService
 		return seValuePricePointDao;
 	}
 
+	@Override
+	public void importFromStaging() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

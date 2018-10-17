@@ -1,4 +1,4 @@
-package de.slag.finance.data.impl;
+package de.slag.finance.data.impl.dev;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

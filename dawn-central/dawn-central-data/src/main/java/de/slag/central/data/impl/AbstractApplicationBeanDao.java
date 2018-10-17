@@ -1,53 +1,57 @@
 package de.slag.central.data.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
-import de.slag.base.tools.FieldMappingUtils;
+import javax.annotation.Resource;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
 import de.slag.base.tools.mapping.FieldMapper;
-import de.slag.base.tools.reflection.PropertyGetter;
-import de.slag.base.tools.reflection.PropertySetter;
-import de.slag.base.tools.reflection.ReflectionUtils;
 import de.slag.central.data.FieldMapperSupport;
+import de.slag.central.data.transfer.PersistDataTransferService;
 import de.slag.central.model.ApplicationBean;
 
 public abstract class AbstractApplicationBeanDao<PB extends PersistBean, AB extends ApplicationBean>
 		extends AbstractPersistBeanDao<PB> {
 
-	public AB loadBy(long id, Supplier<AB> beanSupplier) {
+	@Resource
+	private PersistDataTransferService persistDataTransferService;
+
+	private final BiConsumer<AB, PB> AP_NO_SPECIAL_TRANSFER = (a, p) -> {
+	};
+	private final BiConsumer<PB, AB> PA_NO_SPECIAL_TRANSFER = (p, a) -> {
+	};
+
+	private final BiConsumer<PB, AB> MAP_PERSIST_TO_APPLICATION = (p, a) -> {
+		persistDataTransferService.transferData(p, a);
+		getSpecialTransferPA().accept(p, a);
+	};
+
+	private final BiConsumer<AB, PB> MAP_APPLICATION_TO_PERSIST = (a, p) -> {
+		persistDataTransferService.transferData(a, p);
+		getSpecialTransferAP().accept(a, p);
+	};
+
+	protected BiConsumer<PB, AB> getSpecialTransferPA() {
+		return PA_NO_SPECIAL_TRANSFER;
+	}
+
+	protected BiConsumer<AB, PB> getSpecialTransferAP() {
+		return AP_NO_SPECIAL_TRANSFER;
+	}
+
+	public Optional<AB> loadBy(long id, Supplier<AB> beanSupplier) {
 		final PB persistBean = loadById(id);
-		final AB bean = beanSupplier.get();
-		mapPersistToApplication().accept(persistBean, bean);
-		return bean;
-	}
-
-	protected BiConsumer<PB, AB> mapPersistToApplication() {
-		return new BiConsumer<PB, AB>() {
-
-			@Override
-			public void accept(PB t, AB u) {
-
-				// hier wird alles gemappt
-				FieldMappingUtils.map(t, u, Collections.emptyList(), true);
-			}
-		};
-	}
-
-	protected BiConsumer<AB, PB> mapApplicationToPersist() {
-		return new BiConsumer<AB, PB>() {
-
-			@Override
-			public void accept(AB t, PB u) {
-
-				// hier wird alles gemappt außer die 'id'
-				FieldMappingUtils.map(t, u, Arrays.asList("id"), true);
-			}
-		};
+		if (persistBean == null) {
+			return Optional.empty();
+		}
+		return Optional.of(one(persistBean, beanSupplier));
 	}
 
 	public void save(AB bean) {
@@ -59,27 +63,8 @@ public abstract class AbstractApplicationBeanDao<PB extends PersistBean, AB exte
 		} else {
 			persistBean = create();
 		}
-		mapApplicationToPersist().accept(bean, persistBean);
+		MAP_APPLICATION_TO_PERSIST.accept(bean, persistBean);
 		save(persistBean);
-	}
-
-	das hier testen anstelle den FieldMappingUtils
-	private AB unpersist(PB persistBean, Supplier<AB> supplier) {
-		final AB ab = supplier.get();
-		final Collection<PropertyGetter> determineGetter = ReflectionUtils.determineGetter(persistBean);
-		final Collection<PropertySetter> determineSetter = ReflectionUtils.determineSetter(ab);
-
-		for (PropertySetter propertySetter : determineSetter) {
-			final String name = propertySetter.getName();
-			final PropertyGetter propertyGetter = determineGetter.stream()
-					.filter(s -> s.getName().equals(name))
-					.findFirst()
-					.get();
-			final FieldMapper<?> fieldMapper = getFieldMapper(propertyGetter.getType(), propertySetter.getType());
-			propertySetter.set(fieldMapper.equals(propertyGetter.get()));
-		}
-		return ab;
-
 	}
 
 	public FieldMapper<?> getFieldMapper(Class<?> from, Class<?> to) {
@@ -89,10 +74,10 @@ public abstract class AbstractApplicationBeanDao<PB extends PersistBean, AB exte
 	public void delete(AB bean) {
 		final PB persistBean = loadById(bean.getId());
 		delete(persistBean);
-		mapPersistToApplication().accept(persistBean, bean);
+		MAP_PERSIST_TO_APPLICATION.accept(persistBean, bean);
 	}
 
-	public void delete(Long id) {
+	public void deleteBy(Long id) {
 		final PB loadById = loadById(id);
 		if (loadById == null) {
 			return;
@@ -101,13 +86,27 @@ public abstract class AbstractApplicationBeanDao<PB extends PersistBean, AB exte
 	}
 
 	public Collection<AB> findAll(Supplier<AB> beanSupplier) {
-		final Collection<PB> persistBeans = findAll();
-		final Collection<AB> beans = new ArrayList<>();
-		for (PB pb : persistBeans) {
-			final AB ab = beanSupplier.get();
-			mapPersistToApplication().accept(pb, ab);
-			beans.add(ab);
+		return all(findAll(), beanSupplier);
+	}
+
+	protected <T> AB one(PB pb, Supplier<AB> creator) {
+		final AB ab = creator.get();
+		MAP_PERSIST_TO_APPLICATION.accept(pb, ab);
+		return ab;
+	}
+
+	protected Collection<AB> all(Collection<PB> all, Supplier<AB> creator) {
+		return all.stream().map(p -> one(p, creator)).collect(Collectors.toList());
+	}
+
+	protected <T> AB loadBy(String hql, Function<Query<PB>, PB> function, Supplier<AB> creator) {
+		try (Session session = openSession()) {
+			final PB persistBean = function.apply(session.createQuery(hql, getBeanClass()));
+			if (persistBean == null) {
+				return null;
+			}
+
+			return one(persistBean, creator);
 		}
-		return beans;
 	}
 }

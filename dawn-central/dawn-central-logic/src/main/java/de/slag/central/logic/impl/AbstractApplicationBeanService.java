@@ -1,8 +1,10 @@
 package de.slag.central.logic.impl;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Supplier;
 
+import de.slag.central.ApplicationException;
 import de.slag.central.data.ApplicationBeanDao;
 import de.slag.central.model.ApplicationBean;
 
@@ -31,7 +33,11 @@ public abstract class AbstractApplicationBeanService<AB extends ApplicationBean>
 	}
 
 	public AB loadBy(long id) {
-		return getDao().loadBy(id, getSupplier());
+		final Optional<AB> loadBy = getDao().loadBy(id, getSupplier());
+		if (loadBy.isPresent()) {
+			return loadBy.get();
+		}
+		throw new ApplicationException("no data found with id: " + id + ", class: " + getBeanClass().getName());
 	}
 
 	public void save(AB bean) {
@@ -42,11 +48,11 @@ public abstract class AbstractApplicationBeanService<AB extends ApplicationBean>
 	public void delete(AB bean) {
 		getDao().delete(bean);
 	}
-	
+
 	public void delete(Long id) {
-		getDao().delete(id);
+		getDao().deleteBy(id);
 	}
-	
+
 	public Collection<AB> findAll() {
 		return getDao().findAll(getSupplier());
 	}

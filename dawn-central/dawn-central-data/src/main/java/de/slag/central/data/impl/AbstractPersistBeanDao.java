@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,6 +15,8 @@ import org.hibernate.query.Query;
 import de.slag.base.tools.reflection.ReflectionUtils;
 
 public abstract class AbstractPersistBeanDao<PB extends PersistBean> extends AbstractDao {
+
+	private static final Log LOG = LogFactory.getLog(AbstractPersistBeanDao.class);
 
 	protected static final String COL_VALID_UNTIL = "validUntil";
 
@@ -71,8 +75,19 @@ public abstract class AbstractPersistBeanDao<PB extends PersistBean> extends Abs
 	}
 
 	protected <T> T execute(String hql, Function<Query<PB>, T> function) {
+		final long start = System.currentTimeMillis();
+		
 		try (Session session = openSession()) {
 			return function.apply(session.createQuery(hql, getBeanClass()));
+		} finally {
+			
+			final long duration = System.currentTimeMillis() - start;
+			final String message = "load " + getClass().getName() + " took (ms): " + duration;
+			if (duration > 100) {
+				LOG.warn(message);
+			} else {
+				LOG.debug(message);
+			}
 		}
 	}
 

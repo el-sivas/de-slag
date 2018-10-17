@@ -1,12 +1,10 @@
-package de.slag.finance.data.impl;
-
-import org.springframework.stereotype.Repository;
+package de.slag.finance.data.impl.dev;
 
 import de.slag.central.data.impl.AbstractApplicationBeanDao;
 import de.slag.finance.data.SeValuePricePointDao;
 import de.slag.finance.model.SeValuePricePoint;
 
-@Repository
+//@Repository
 public class SeValuePricePointDaoImpl extends AbstractApplicationBeanDao<PersistSeValuePoint, SeValuePricePoint>
 		implements SeValuePricePointDao {
 

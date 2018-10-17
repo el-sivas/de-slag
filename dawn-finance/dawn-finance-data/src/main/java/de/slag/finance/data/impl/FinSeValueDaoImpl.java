@@ -7,11 +7,11 @@ import de.slag.finance.data.SeValueDao;
 import de.slag.finance.model.SeValue;
 
 @Repository
-public class SeValueDaoImpl extends AbstractApplicationBeanDao<PersistSeValue, SeValue> implements SeValueDao {
+public class FinSeValueDaoImpl extends AbstractApplicationBeanDao<FinSeValue, SeValue> implements SeValueDao {
 
 	@Override
-	protected Class<PersistSeValue> getBeanClass() {
-		return PersistSeValue.class;
+	protected Class<FinSeValue> getBeanClass() {
+		return FinSeValue.class;
 	}
 
 }

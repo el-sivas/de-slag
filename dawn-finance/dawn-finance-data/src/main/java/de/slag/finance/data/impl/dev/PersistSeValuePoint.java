@@ -1,4 +1,4 @@
-package de.slag.finance.data.impl;
+package de.slag.finance.data.impl.dev;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -11,13 +11,14 @@ import javax.persistence.Table;
 
 import de.slag.central.data.impl.PersistBean;
 import de.slag.finance.MonetaryAmountFactorySupplier;
+import de.slag.finance.data.impl.FinSeValue;
 
 //@Entity
 @Table(name = "se_value_point")
 public class PersistSeValuePoint extends PersistBean {
 
 	@ManyToOne
-	private PersistSeValue seValue;
+	private FinSeValue seValue;
 	
 	@Column
 	private BigDecimal price;
