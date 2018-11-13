@@ -22,25 +22,25 @@ public abstract class ApplicationController implements DawnController {
 	protected void addError(String text) {
 		addMessage(Severity.ERROR, text);
 	}
-	
+
 	protected void addWaring(String text) {
 		addMessage(Severity.WARN, text);
 	}
-	
+
 	protected void addInfo(String text) {
 		addMessage(Severity.INFO, text);
 	}
-	
+
 	private void addMessage(Severity severity, String text) {
 		messages.add(ControllerMessage.creating(severity, text));
 	}
-	
+
 	public final boolean isLoadLazyValuesExternal() {
 		reset();
 		loadLazyValues();
 		return true;
 	}
-	
+
 	protected void loadLazyValues() {
 		// implement if needet
 	}
@@ -67,15 +67,19 @@ public abstract class ApplicationController implements DawnController {
 
 	public String logOut() {
 		sessionContext.setCurrentUser(null);
-		
+
 		// das hier hilft leider nix
 		return "index.html";
+	}
+
+	public boolean isErrorsOccured() {
+		return messages.stream().filter(e -> e.getSeverity() == Severity.ERROR).findFirst().isPresent();
 	}
 
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

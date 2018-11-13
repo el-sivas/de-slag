@@ -5,11 +5,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import de.slag.central.data.impl.PersistBean;
 
 @Entity
-public class FinImpSeValuePoint extends PersistBean {
+@Table(name="IMP_FIN_VALUE_POINT")
+public class ImpFinValuePoint extends PersistBean {
 	
 	@Column
 	private String isin;

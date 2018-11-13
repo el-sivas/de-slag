@@ -90,6 +90,9 @@ public abstract class AbstractApplicationBeanDao<PB extends PersistBean, AB exte
 	}
 
 	protected <T> AB one(PB pb, Supplier<AB> creator) {
+		if (pb == null) {
+			return null;
+		}
 		final AB ab = creator.get();
 		MAP_PERSIST_TO_APPLICATION.accept(pb, ab);
 		return ab;

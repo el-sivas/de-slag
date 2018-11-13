@@ -23,6 +23,21 @@
 			</p:column>
 		</p:dataTable>
 
+		<p:fieldset legend="Import" toggleable="true" toggleSpeed="100"
+			style="margin-top:6px" id="fs-create" collapsed="true">
+
+			<div style="margin-bottom: 6px">
+				<div>
+					<p:inputText value="#{pc.importIsins}" />
+				</div>
+				<div>
+					<h:outputText value="ISINs (comma separated)" />
+				</div>
+			</div>
+			<p:commandButton value="IMPORT" id="btn_login" action="#{pc.importValues}"
+				ajax="false" />
+		</p:fieldset>
+
 	</h:form>
 </h:body>
 </html>

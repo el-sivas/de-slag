@@ -57,4 +57,8 @@ public abstract class AbstractApplicationBeanService<AB extends ApplicationBean>
 		return getDao().findAll(getSupplier());
 	}
 
+	public void saveAll(Collection<AB> beans) {
+		beans.forEach(e -> save(e));
+	}
+
 }

@@ -8,5 +8,8 @@ import de.slag.finance.model.SeValuePricePoint;
 public interface SeValuePricePointImportService {
 
 
+	/**
+	 * Import but dont saves
+	 */
 	Collection<SeValuePricePoint> importData(Collection<String> isins, Supplier<SeValuePricePoint> s);
 }
