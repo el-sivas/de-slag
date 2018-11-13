@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import de.slag.central.data.adm.DbInfoDao;
 import de.slag.central.data.impl.AbstractPersistBeanDao;
 import de.slag.central.data.model.DbInfo;
+import de.slag.central.data.model.DbInfoType;
 
 @Repository
 public class DbInfoDaoImpl extends AbstractPersistBeanDao<DbInfo> implements DbInfoDao {
@@ -20,5 +21,11 @@ public class DbInfoDaoImpl extends AbstractPersistBeanDao<DbInfo> implements DbI
 		dbInfo.setInfo(info);
 		save(dbInfo);
 	}
+
+	public void save(DbInfoType type, String text) {
+		
+	}
+	
+	
 
 }

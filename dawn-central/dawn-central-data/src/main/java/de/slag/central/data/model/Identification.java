@@ -10,6 +10,10 @@ import de.slag.central.data.impl.PersistBean;
 
 @Entity
 public class Identification extends PersistBean {
+	
+	private static final String FIRST_NAME = "FIRST_NAME";
+	
+	private static final String LAST_NAME = "LAST_NAME";
 
 	@Column(unique = true)
 	private String identifier;
@@ -41,5 +45,22 @@ public class Identification extends PersistBean {
 	public void setIdHash(String idHash) {
 		this.idHash = idHash;
 	}
+	
+	public String getFirstName() {
+		return getElseString(FIRST_NAME);
+	}
+	
+	public void setFirstName(String firstName) {
+		setElseString(FIRST_NAME, firstName);
+	}
+	
+	public String getLastName() {
+		return getElseString(LAST_NAME);
+	}
+	
+	public void setLastName(String lastName) {
+		setElseString(LAST_NAME, lastName);
+	}
+
 
 }

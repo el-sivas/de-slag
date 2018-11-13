@@ -13,6 +13,8 @@ public class DbInfo extends PersistBean {
 
 	@Column(length = DawnConstants.Database.ORACLE_MAX_LENGTH_VARCHAR_2)
 	private String info;
+	
+	private DbInfoType type;
 
 	public String getInfo() {
 		return info;
@@ -20,6 +22,14 @@ public class DbInfo extends PersistBean {
 
 	public void setInfo(String info) {
 		this.info = StringUtils.abbreviate(info, DawnConstants.Database.ORACLE_MAX_LENGTH_VARCHAR_2);
+	}
+
+	public DbInfoType getType() {
+		return type;
+	}
+
+	public void setType(DbInfoType type) {
+		this.type = type;
 	}
 
 }
