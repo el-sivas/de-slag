@@ -16,35 +16,48 @@
 
 		<h:outputText value="SLAG Invest" style="font-size:300%" />
 
+		<c:if test="#{!pc.contextAvailable}">
+			<p:fieldset style="margin-bottom:6px;;margin-top:48px;width:100%">
+				<h:outputText
+					value="No context available. Set as vm argument: '-DDawnContext=/path/to/context.txt'" />
+			</p:fieldset>
+		</c:if>
 
-		<p:fieldset style="margin-bottom:6px;;margin-top:48px;width:10%">
+		<c:if test="#{pc.contextAvailable}">
+			<p:fieldset style="margin-bottom:6px;;margin-top:48px;width:10%">
 
-			<div style="margin-bottom: 6px">
-				<div>
-					<p:inputText value="#{pc.username}" />
+				<div style="margin-bottom: 6px">
+					<div>
+						<p:inputText value="#{pc.username}"
+							readonly="#{!pc.contextAvailable}" />
+					</div>
+					<div>
+						<h:outputText value="username" />
+					</div>
 				</div>
-				<div>
-					<h:outputText value="username" />
+				<div style="margin-bottom: 6px">
+					<div>
+						<p:password value="#{pc.password}"
+							readonly="#{!pc.contextAvailable}" />
+					</div>
+					<div>
+						<h:outputText value="password" />
+					</div>
 				</div>
+				<p:commandButton value="LOGIN" id="btn_login" action="#{pc.login}"
+					readonly="#{!pc.contextAvailable}" ajax="false" />
+			</p:fieldset>
+			<div>
+				<h:outputText value="#{pc.msg}" />
 			</div>
-			<div style="margin-bottom: 6px">
-				<div>
-					<p:password value="#{pc.password}" />
-				</div>
-				<div>
-					<h:outputText value="password" />
-				</div>
-			</div>
-			<p:commandButton value="LOGIN" id="btn_login" action="#{pc.login}"
-				ajax="false" />
-		</p:fieldset>
-		<div>
-			<h:outputText value="#{pc.msg}" />
-		</div>
 
-		<div style="margin-top: 6px">
-			<h:link value="DB-Tool" outcome="dbtool" />
-		</div>
+			<div style="margin-top: 6px">
+				<h:link value="DB-Tool" outcome="dbtool"
+					readonly="#{!pc.contextAvailable}"
+					rendered="#{pc.contextAvailable}" />
+				<h:outputText value="DB-Tool" rendered="#{!pc.contextAvailable}" />
+			</div>
+		</c:if>
 	</h:form>
 </h:body>
 </html>

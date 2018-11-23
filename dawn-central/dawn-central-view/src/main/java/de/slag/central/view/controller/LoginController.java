@@ -27,6 +27,10 @@ public class LoginController implements DawnController {
 
 	private String password;
 
+	public boolean isContextAvailable() {
+		return sessionContext.isContextAvaliable();
+	}
+
 	public String login() {
 		final User user = userService.loadByUsername(username);
 		if (user == null) {

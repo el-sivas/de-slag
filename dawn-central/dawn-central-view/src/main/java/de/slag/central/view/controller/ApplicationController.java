@@ -6,11 +6,12 @@ import java.util.Collection;
 import javax.annotation.Resource;
 
 import de.slag.central.model.adm.User;
+import de.slag.central.view.DawnContext;
 import de.slag.central.view.SessionContext;
 import de.slag.central.view.controller.message.ControllerMessage;
 import de.slag.central.view.controller.message.ControllerMessage.Severity;
 
-public abstract class ApplicationController implements DawnController {
+public abstract class ApplicationController implements DawnContextController {
 
 	private static final long serialVersionUID = 1L;
 
@@ -18,6 +19,11 @@ public abstract class ApplicationController implements DawnController {
 	private SessionContext sessionContext;
 
 	private Collection<ControllerMessage> messages = new ArrayList<>();
+	
+	@Override
+	public DawnContext getContext() {
+		return sessionContext;
+	}
 
 	protected void addError(String text) {
 		addMessage(Severity.ERROR, text);
